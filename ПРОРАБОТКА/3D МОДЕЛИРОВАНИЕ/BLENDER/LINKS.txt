@@ -1,0 +1,30 @@
+ТРИ ИЗВЕСТНЫХ МЕСТА ОФИЦИАЛЬНОГО РАСПРОСТРАНЕНИЯ BLENDER:
+
+ 1. Сайт самого blender:
+     https://www.blender.org/
+ 2. Через STEAM (там он обновляется автоматически).
+ 3. И через магазин приложений Windows Store.
+
+ 
+
+https://www.blender.org/download/requirements/
+
+Hardware Requirements
+
+Minimum
+
+    64-bit quad core CPU with SSE2 support
+    8 GB RAM
+    Full HD display
+    Mouse, trackpad or pen+tablet
+    Graphics card with 2 GB RAM, OpenGL 4.3
+    Less than 10 year old
+
+Recommended
+
+    64-bit eight core CPU
+    32 GB RAM
+    2560×1440 display
+    Three button mouse or pen+tablet
+    Graphics card with 8 GB RAM
+
