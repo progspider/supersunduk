@@ -1,0 +1,2 @@
+https://python.ivan-shamaev.ru/guide-conda-environments-anaconda-python-data-science-platform/
+Инструкция по Anaconda & Conda. Как управлять и настроить среду для Python?

@@ -1,0 +1,2 @@
+https://habr.com/ru/post/658401/ VS Code portable, делаем настоящую переносную сборку для Windows
+https://code.visualstudio.com/docs/editor/portable Portable Mode in Visual Studio Code
