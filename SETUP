@@ -1,0 +1,142 @@
+Установка программ в Kali Linux:
+
+
+1. Для установки qBittorrent воспользуйтесь командой: sudo apt install qbittorrent
+
+2. Для установки VLC используйте команду: sudo apt install vlc
+
+3. Установить Vim можно командой: sudo apt install vim
+
+4. Для установки KeePass: sudo apt-get install keepass2
+
+5. Установить LibreOffice: sudo apt-get install libreoffice
+
+6. Установка Thunderbird: sudo apt-get install thunderbird
+
+7. GIMP Установка: sudo apt install gimp
+
+8. OpenShot
+    Сайт: https://www.openshot.org/download/
+
+    Для установки
+     sudo add-apt-repository ppa:openshot.developers/ppa
+     sudo apt-get update
+     sudo apt-get install openshot-qt
+
+9. Установка Telegram
+     wget https://telegram.org/dl/desktop/linux                          (загрузка бинарного файла из официального сайта)
+     sudo tar xJf linux -C /opt/                                         (распаковка полученного файла в папку /opt/)
+     sudo ln -s /opt/Telegram/Telegram /usr/local/bin/telegram-desktop   (создание символической ссылки на этот файл в /usr/local/bin, чтобы система видела исполняемый файл программы)
+
+10. Установка Visual Studio Code: https://code.visualstudio.com/docs/?dv=linux64_deb
+
+11. Chrome: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    Обновление: sudo apt-get --only-upgrade install google-chrome-stable
+
+12. Для получения Wine в Kali Linux 2.0 достаточно набрать одну команду: dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+
+13. SCID (Shane’s Chess Information Database) — оболочка для просмотра и управления шахматными базами данных.
+    Установка в Ubuntu (LinuxMint): sudo apt install scid
+    Сайт (скачать бесплатно): http://scid.sourceforge.net/
+
+14. Установить Kdenlive: sudo apt install kdenlive (нелинейный видеоредактор с открытым исходным кодом на основе Framework MLT и KDE)
+                   Сайт: https://kdenlive.org/en/download/
+       Установка из PPA: sudo add-apt-repository ppa:kdenlive/kdenlive-stable (Сделав это, мы обновим список пакетов: sudo apt update, после: sudo apt install kdenlive)
+   Установка от Flathub: flatpak install flathub org.kde.kdenlive (проверить, есть ли обновление с помощью команды: flatpak run org.kde.kdenlive)
+Запуск при помощи AppImage: wget https://files.kde.org/kdenlive/release/kdenlive-18.08.3-x86_64.AppImage (скачать)
+                            sudo chmod +x kdenlive-18.08.3-x86_64.AppImage (сделать исполняемым)
+                            ./kdenlive-18.08.3-x86_64.AppImage (запуск)
+
+15. Shotcut: https://shotcut.org/download/
+
+16. MKVToolNix: https://mkvtoolnix.download/downloads.html
+    ▷ AlmaLinux 8.x
+        sudo rpm -Uhv https://mkvtoolnix.download/almalinux/bunkus-org-repo-2-4.noarch.rpm
+        sudo dnf install mkvtoolnix mkvtoolnix-gui
+    ▷ Linux AppImage
+        https://mkvtoolnix.download/appimage/MKVToolNix_GUI-58.0.0-x86_64.AppImage или https://mkvtoolnix.download/appimage/
+         chmod u+rx MKVToolNix_GUI-58.0.0-x86_64.AppImage
+         ln -s MKVToolNix_GUI-58.0.0-x86_64.AppImage mkvpropedit
+         ./mkvpropedit my-movie.mkv --set title="This is super cool movie"
+    ▷ Arch Linux
+        pacman -S mkvtoolnix-cli mkvtoolnix-gui
+    ▷ CentOS Stream/RedHat Enterprise Linux 8.x
+        sudo rpm -Uhv https://mkvtoolnix.download/centosstream/bunkus-org-repo-2-4.noarch.rpm
+        sudo dnf install mkvtoolnix mkvtoolnix-gui
+    ▷ Debian packages
+        Инструкция длинная, лучше на сайт зайти посмотреть.
+    ▷ Docker
+        Docker image: https://hub.docker.com/r/jlesage/mkvtoolnix
+        full documentation: https://github.com/jlesage/docker-mkvtoolnix
+        GitHub repository: https://github.com/jlesage/docker-mkvtoolnix/issues
+    ▷ Fedora 33–34
+        sudo rpm -Uhv https://mkvtoolnix.download/fedora/bunkus-org-repo-2-4.noarch.rpm
+        sudo dnf install mkvtoolnix mkvtoolnix-gui
+    ▷ Linux Flatpak images
+        https://flathub.org/apps/details/org.bunkus.mkvtoolnix-gui
+        flatpak install flathub org.bunkus.mkvtoolnix-gui flatpak run org.bunkus.mkvtoolnix-gui
+            flatpak run --command=<executable> org.bunkus.mkvtoolnix-gui <command line arguments>
+            flatpak run --command=mkvpropedit org.bunkus.mkvtoolnix-gui my-movie.mkv --set title="This is super cool movie"
+
+17. hardinfo
+
+    Сайт: https://onstartup.ru/x-window-system/hardinfo/
+
+    Установка (Ubuntu / Linux Mint / Debian):
+
+       sudo apt update
+       sudo apt install hardinfo
+
+18. youtube-dl
+
+    Сайт: https://youtube-dl.org/
+          https://ytdl-org.github.io/youtube-dl/download.html
+          https://habr.com/ru/post/369853/ youtube-dl, или как скачать видео с YouTube в качестве 1080p и выше
+
+    Установка: sudo apt-get install youtube-dl
+               sudo yum install youtube-dl
+               sudo pacman -S youtube-dl
+               sudo pip install youtube-dl
+
+-----------------------------------------------------------------------------------------
+Установка deb пакетов из консоли:
+sudo dpkg -i имя_пакета.deb (Установка)
+sudo apt -f install (доустановить зависимости, сразу после первой команды, если они есть)
+-----------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+Установка файлов с расширением ".run": sudo ./my_program.run (sudo chmod +x my_program.run - делаем файл исполняемым, эта команда в начале)
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+https://hackware.ru/?p=11750   Что нужно сделать после установки Kali Linux
+
+
+-------------------------------------------------------------------------------------
+УДАЛЕНИЕ
+
+Эта одна команда полностью удалит винные и playonlinux: sudo apt purge wine* playonlinux* && sudo apt autoremove && m -r ~/.wine ~/.playonlinux
+Также в файле /var/cache/apt/archives могут быть файлы .deb вина и playonlinux, которые вы можете удалить с помощью apt clean, и может быть некоторые файлы тех приложений dos, которые могут быть оставлены, как сохраненная игра ..etc. Вы удалите их вручную.
+
+УДАЛЕНИЕ SNAP ПАКЕТА: sudo snap remove paket
+
+Удаление программ, используя командную строку: sudo apt remove paket
+Пакеты которые устанавливались автоматически и больше не требуются, для их удаления используйте «sudo apt autoremove».
+
+
+--------------------------------------------------------------------------------------
+Подсчитываем md5 (хеш-сумму) в Linux: md5sum /home/ruslan/UBUNTUDDE/ubuntudde-21.04-amd64-desktop.iso
+
+   Для проверки контрольной суммы MD5: md5sum first.iso
+  Для проверки контрольной суммы sha1: sha1sum first.iso
+Для проверки контрольной суммы sha256: sha256sum first.iso
+Для проверки контрольной суммы sha384: sha384sum first.iso
+Для проверки контрольной суммы sha512: sha512sum first.iso
+   Для проверки контрольной суммы CRC: cksum first.iso
+
+Все эти программы входят в пакет coreutils.
+
+
+
+
+
+

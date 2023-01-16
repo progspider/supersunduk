@@ -1,0 +1,53 @@
+ruslan@localhost:~> ipconfig
+Если 'ipconfig' — это не опечатка, то вы можете использовать command-not-found для поиска пакета, содержащего данную программу, вот так:
+    cnf ipconfig
+ruslan@localhost:~> cnf ipconfig
+ ipconfig: команда не найдена                     
+ruslan@localhost:~> cnf git
+                 
+Программу 'git' можно найти в следующих пакетах:
+  * git-core [ путь: /usr/bin/git, репозиторий: zypp (repo-oss) ]
+  * git-core [ путь: /usr/bin/git, репозиторий: zypp (repo-sle-update) ]
+
+Попробуйте установить этот пакет следующей командой:
+    sudo zypper install git-core
+
+ruslan@localhost:~> 
+-----------------------------------------------------------------------------------
+
+
+ОБНОВЛЕНИЕ openSUSE: sudo zypper update        (если вы используете openSUSE Leap)
+                     sudo zypper dist-upgrade  (если вы используете openSUSE Tumbleweed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

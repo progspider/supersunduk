@@ -1,0 +1,49 @@
+=========================================================
+https://thonny.org/
+
+The latest version:
+Binary bundle for PC (Thonny+Python):
+bash <(wget -O - https://thonny.org/installer-for-linux)
+
+With pip:
+pip3 install thonny
+
+With Flatpak:
+flatpak install org.thonny.Thonny
+
+Distro packages (may not be the latest version):
+Debian, Raspbian, Ubuntu, Mint and others:
+sudo apt install thonny
+
+Fedora:
+sudo dnf install thonny
+=========================================================
+HWiNFO
+https://www.fosshub.com/HWiNFO.html
+https://www.hwinfo.com/
+=========================================================
+Speccy
+https://www.ccleaner.com/speccy?cc-noredirect=
+=========================================================
+Check Flash
+http://mikelab.kiev.ua/index.php?page=PROGRAMS/chkflsh
+=========================================================
+calibre
+https://calibre-ebook.com/download
+=========================================================
+Sumatra PDF Viewer
+Лёгкий, быстро работает, дополнительно может открывать книги в формате FB2.
+https://www.sumatrapdfreader.org/free-pdf-reader
+=========================================================
+ПРОГРАММЫ ДЛЯ СКАИВАНИЯ С YouTube:
+
+ ■ Ummy Video Downloader
+    Link1: https://videodownloader.ummy.net/ru/
+    Link2: https://ummy-video-downloader.ru.uptodown.com/windows
+
+ ■ Download Studio
+    Link: https://downloadstudio.net/
+
+ ■ Televzr Light
+    Link: https://televzr.com/
+=========================================================

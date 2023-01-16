@@ -1,0 +1,13 @@
+https://qastack.ru/ubuntu/62249/how-do-you-change-brightness-color-and-sharpness-from-command-line
+
+┌──(ruslan㉿RUSLAN)-[~]
+└─$ xrandr --listmonitors
+Monitors: 1
+ 0: +*LVDS-1 1600/382x900/215+0+0  LVDS-1
+                                                                                                                           
+┌──(ruslan㉿RUSLAN)-[~]
+└─$ xrandr --output LVDS-1 --brightness 0.9                                                  
+                                                                                                                           
+┌──(ruslan㉿RUSLAN)-[~]
+└─$ xrandr --output LVDS-1 --brightness 0.99
+

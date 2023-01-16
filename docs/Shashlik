@@ -1,0 +1,58 @@
+https://cnx-software.ru/2016/03/09/zapusk-android-prilozhenij-v-linux-s-pomoshhyu-shashlik-android-emulation-laye/
+
+Запуск Android приложений в Linux с помощью эмулятора Shashlik Android
+
+Уже существуют способы для запуска Android приложений в дистрибутивах Linux, таких как Ubuntu или Debian, включающих в себя Android эмулятор SDK, запускаются Android-x86 или Remix OS в виртуальной машине или через Genymotion, но эти решения немного громоздким для установки. Эмулятор Shashlik Android призван упростить процесс запуска Android приложений в отдельном окне дистрибутивов Linux.
+
+Android приложения могут быть запущены из меню запуска или в терминале как и остальные программы Linux. Приложения запускаются внутри эмулятора, так что вы на самом деле каждый раз загружаете урезанную версию Android, что означает что при каждом запуске будет тратится некоторое время. OpenGL и графика вынесены на хост систему чтобы увеличить производительность. В будущем эмулятор (виртуальная машина) может быть удален и Shashlik может стать просто сонтейнером, которому требуется заменить libbinder в userspace.
+
+Есть два способа попробовать эмулятор Shashlik:
+
+1. Собрать из исходников следуя инструкциям на странице Что такое Shashlik?.
+2. Скачать и установить предварительно собранный deb или AUR пакет
+
+Я начал с первого способа, но поскольку вам потребуется собрать полноценную Android систему процесс сборки кода может затянуться надолго, так что я решил использовать легкий путь по установке пакета в Ubuntu:
+
+wget http://static.davidedmundson.co.uk/shashlik/shashlik_0.9.3.deb
+sudo dpkg -i shashlik_0.9.3.deb
+
+Теперь вам понадобится некоторые apk файлы, я установил CPU-Z и Antutu 6.0.4 в Ubuntu 14.04 следующим образом:
+
+/opt/shashlik/bin/shashlik-install com.cpuid.cpu_z-17.apk
+/opt/shashlik/bin/shashlik-install com.antutu.benchmark.full_6.0.4-6000400_minAPI16\(armeabi-v7a\,x86\)\(nodpi\).apk
+/opt/shashlik/bin/shashlik-install com.antutu.ABenchMark_6.0.4-6000400_minAPI16\(arm64-v8a\,armeabi-v7a\,x86\,x86_64\)\(nodpi\).apk
+
+Приложения были успешно установлены, но процесс установки на самом деле не закончен:
+
+/opt/shashlik/bin/shashlik-install com.cpuid.cpu_z-17.apk 
+Successfully installed CPU-Z
+Traceback (most recent call last):
+  File "/opt/shashlik/bin/shashlik-install", line 109, in &lt;module&gt;
+    message ("Successfully installed %s" % app_name)
+  File "/opt/shashlik/bin/shashlik-install", line 22, in message
+    "--msgbox", msg])
+  File "/usr/lib/python3.4/subprocess.py", line 537, in call
+    with Popen(*popenargs, **kwargs) as p:
+  File "/usr/lib/python3.4/subprocess.py", line 859, in __init__
+    restore_signals, start_new_session)
+  File "/usr/lib/python3.4/subprocess.py", line 1457, in _execute_child
+    raise child_exception_type(errno_num, err_msg)
+FileNotFoundError: [Errno 2] No such file or directory: 'kdialog'
+
+Эта ошибка происходит потому, что kdialog отсутствует и если вам не нравятся сообщения об ошибках, его можно установить:
+
+sudo apt-get install kde-baseapps-bin
+
+Как только все будет сделано, вы сможете увидеть окно в котором отображается, что приложение успешно установлено, вы можете запустить его через доску приложений Ubuntu. Довольно аккуратно.
+
+Итак, первым делом я запустил CPU-Z, через несколько секунд я увидел окно эмулятора, а в нем логотип CPU-Z, примерно через минут появился статус бар с иконками, я подождал еще 10 минут, но приложение так и не запустилось полностью, экран оставался черным.
+
+Мне больше повезло с Antutu, так как приложение смогло провести все тестирования кроме 3D графики и предоставило информацию о системе.
+
+Однако не смотря на то что вы установили приложение и запустили его успешно один раз, проблема с черный экраном может вернуться.
+
+Разработчики упомянули, что “текущая версия была протестирована для работы в среде KDE Plasma 5. В других средах, эта версия *может* работать, но не тестировалась разработчиками”, на сайте разработчиков есть видео показывающее как работает данная версия в средах Flappy Bird и Spotify.
+
+Выражаем свою благодарность источнику с которого взята и переведена статья, сайту cnx-software.com.
+
+Оригинал статьи вы можете прочитать здесь: https://www.cnx-software.com/2016/03/08/run-android-apps-in-linux-with-shashlik-android-emulation-layer/

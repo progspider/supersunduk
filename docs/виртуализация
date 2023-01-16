@@ -1,0 +1,17 @@
+1. https://losst.ru/virtualnye-mashiny-dlya-linux
+2. https://sysadmin.pm/portable-qemu/
+3. https://habr.com/ru/post/37824/   Домашний сервер: виртуализация на основе Xen
+4. https://www.citrix.com/ru-ru/downloads/citrix-hypervisor/
+5. https://www.vmgu.ru/citrix-xen   Виртуализация Citrix XenServer, XenDesktop и XenApp
+
+
+
+https://losst.ru/kak-polzovatsya-qemu КАК ПОЛЬЗОВАТЬСЯ QEMU
+- Первое действие:
+создаешь виртуальный жесткий диск на 20 Gb командой -
+$ qemu-img create -f qcow2 manjaro.qcow 20G
+- Второе действие:
+Запускаешь образ своего установочного диска(напр. debian.iso) и ставишь систему в созданном виртуальном жестком диске командой -
+$ qemu-system-x86_64 -hda manjaro.qcow -boot d -cdrom debian.iso -m 3072 -enable-kvm
+Это вкратце.
+Все было описано в этой статье, прочитай еще раз внимательно )

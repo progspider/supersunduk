@@ -1,0 +1,56 @@
+Справочник по командам wget и curl (https://proft.me/2013/08/17/spravochnik-po-komandam-wget-i-curl/)
+
+wget — консольная утилита для скачивания файлов/сайтов, умеет выкачивать файлы рекурсивно, следуя по ссылкам автоматически.
+
+Команда                                                                                                Описание
+wget http://example.com/file.zip                                                                       скачивание файла file.zip в текущую директорию
+wget -P /path/to/save http://example.com/file.zip                                                      скачивание файла file.zip в директорию /path/to/save
+wget -c http://example.com/file.zip                                                                    докачивание файла file.zip в случаи обрыва
+wget -O arch.zip http://example.com/file.zip                                                           скачивание файла file.zip и сохранение под именем arch.zip
+wget -i files.txt                                                                                      скачивание файлов из списка в files.txt
+wget --tries=10 http://example.com/file.zip                                                            количество попыток на скачивание
+wget -Q5m -i http://example.com/                                                                       квота на максимальный размер скачанных файлов, квота действует только при рекурсивном скачивании (-r)
+wget --save-cookies cookies.txt --post-data 'username=proft&password=1' http://example.com/auth.php    идентификация на сервере с сохранением кук для последующего доступа
+wget --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5" http://example.com/	указание User Agent
+echo 'wget http://example.com/file.zip' | at 12:00	скачать http://example.com/file.zip в 12:00 в текущую директорию
+wget ftp://example.com/dir/*.zip                                                                       скачивание всех файлов по шаблону
+wget http://example.com/dir/file{1..10}.zip                                                            скачивание всех файлов по шаблону
+wget -S http://example.com/                                                                            вывод заголовков HTTP серверов и ответов FTP серверов
+wget --spider -i urls.txt                                                                              проверка ссылок в файле на доступность
+wget -b http://example.com/file.zip                                                                    скачивание файла в фоне, лог пишется в wget.log, wget.log.1 и т.д.
+export http_proxy=http://proxy.com:3128/;wget http://example.com/file.zip                              скачивание файла *file.zip* через прокси
+wget -m -w 2 http://example.com/	зеркалирование сайта с сохранением абсолютных ссылок и ожиданием 2-х секунд между запросами
+wget --limit-rate=200k http://example.com/file.zip	ограничение скорости скачивания
+wget -R bmp http://example.com/	не скачивать bmp файлы
+wget -A png,jpg http://example.com/	скачивать только файлы png и jpg
+Пример использования для скачивания документации Django:
+
+wget -r -k -l 5 -p -E -nc -np https://docs.djangoproject.com/en/1.5/
+
+-r - ходим по ссылкам (рекурсивное скачивание)
+-k - преобразовываем ссылки к локальному виду
+-p - скачивание ресурсов необходимых для отображения html-страницы (стили, картинки и т.д.)
+-l - глубина скачивания, 0 - бесконечная вложенность ссылок
+-nc - не перезаписывать существующие файлы
+-np - не подниматься выше начального адреса при рекурсивной загрузке
+Часто используемые wget параметры можно вынести в ~/.wgetrc.
+
+curl — консольная утилита для передачи данных используя URL-синтаксис, поддерживаются протоколы DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet и TFTP.
+Команда	Описание
+curl http://proft.me	получаем содержания главной страницы
+curl -o index.html http://proft.me	получаем содержания главной страницы в файл index.html
+curl -L http://example.com	при получении содержимого страницы следовать по редиректам (если такие есть)
+curl -u username:password http://example.com/login/	получение страницы скрытой за Basic HTTP Authentication
+curl -x proxy.com:3128 http://proft.me	получение страницы используя прокси
+curl -I proft.me	получаем http-заголовки с сайта
+curl -H 'Host: google.ru' http://proft.me	подменить домен при обращении к серверу (передача своего заголовка)
+curl --request POST "http://example.com/form/" --data "field1=value1&field2=value2"	передача данных POST-запросом
+curl -X POST "http://example.com/form/" --data "field1=value1&field2=value2"	передача данных POST-запросом
+curl -X POST -H "Content-Type: application/json" -d '"title":"Commando","year":"1985"' http://example.com/api/movies/	передача данных POST-запросом, данные в виде JSON
+curl --request PUT "http://example.com/api/movie/1/" --data "title=DjangoUnchained"	передача данных PUT-запросом
+curl -F uploadfiled=@file.zip -F submit=OK http://example.com/upload/	загрузка файла file.zip в форму (multipart/form-data)
+curl -u username:password -O ftp://example.com/file.zip	скачать файл с FTP
+curl -u username:password -T file.zip ftp://example.com/	закачать файл по FTP
+curl --cookie "login=proft" http://example.com/login/	установить кукис
+curl --cookie-jar cookies.txt http://example.com	сохранение кукисов в файл
+curl --cookie cookies.txt http://example.com/login/	использование сохраненных кукисов
