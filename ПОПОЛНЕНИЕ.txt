@@ -1,6 +1,6 @@
-ForexChief можно пополнить: Crypto USDT
+ForexChief можно пополнить: Crypto USDT (min: 10 USDT (TRX))
                             Crypto
-							Debit/Credit Card
+							Debit/Credit Card (нужна верификация, min: 20 USD)
 							Advanced Cash
 							NETELLER
 							Perfect Money
