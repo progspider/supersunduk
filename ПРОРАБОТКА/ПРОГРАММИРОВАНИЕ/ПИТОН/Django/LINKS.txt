@@ -1,0 +1,5 @@
+https://docs.djangoproject.com/
+
+https://django.fun/
+
+https://djangodoc.ru/
