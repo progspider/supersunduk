@@ -1,0 +1,82 @@
+Автор оригинала: Albert Acebrón: https://medium.com/@corollari/how-to-publish-a-python-command-line-application-to-pypi-5b97a6d586f1
+Автор публикации, germn: https://habr.com/ru/users/germn/?_ga=2.174509156.776403726.1565180939-46231418.1565180939
+
+Как опубликовать консольную утилиту на PyPI за 1 минуту
+
+Разработав консольную утилиту, вы решаетесь опубликовать её на PyPI. Ну правда, что может быть лучше, чем сделать её доступной через pip install? Погуглив, что для этого надо, вы, возможно, наткнётесь на единственный найденный мной пост по теме (https://gehrcke.de/2014/02/distributing-a-python-command-line-application/), который мало того что от 2014 года, так ещё и требует от вас создать кучу папок и файлов для совершенно ненужных (вам) вещей.
+
+Как же решить эту задачу без лишней головной боли в 2019 году? Я уже задавался этим вопросом и поэтому, прочитав тонну документации, создал для вас этот туториал. Вот пошаговая инструкция.
+
+1. Создайте аккаунт на PyPI (ссылка для регистрации: https://pypi.org/account/register/)
+
+2. Создайте точку входа в приложение (например, файл entry.py со следующим содержимым)
+
+def main():
+    print("It's alive!")
+
+3. Установите poetry
+
+curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+source $HOME/.poetry/env
+
+(poetry можно установить (https://github.com/sdispater/poetry#installation) и по-другому, например, pip install --user poetry — прим. перев.)
+
+4. Создайте окружение
+
+cd myproject # Перейдите в папку проекта, который будем паковать
+poetry init
+
+5. Настройте консольную команду (для этого добавьте следующие строки в появившийся файл pyproject.toml)
+
+[tool.poetry.scripts]
+APPLICATION-NAME = 'entry:main'
+
+APPLICATION-NAME надо поменять на имя консольной команды.
+
+6. Опубликуйте утилиту! (используйте имя пользователя и пароль из шага 1)
+
+poetry publish --username PYPI_USERNAME --password PYPI_PASS --build
+
+Готово! Теперь другому человеку для установки достаточно всего двух команд:
+
+$ sudo pip install PROJECT-NAME
+$ APPLICATION-NAME
+
+Где PROJECT-NAME — это имя, которое вы дали проекту на шаге 4, а APPLICATION-NAME — это имя команды из шага 5.
+
+Обновление версии
+
+Всякий раз, когда вы хотите обновить модуль, просто измените номер версии в файле pyproject.toml:
+
+version = "0.1.0"
+
+И повторите шаг 6:
+
+poetry publish --username PYPI_USERNAME --password PYPI_PASS --build
+------------------------------------------------------------------------------------
+Бонус: настраиваем Travis для авто-публикации
+
+Добавьте следующие строки в файл .travis.yml
+
+language: python
+dist: xenial
+before_install:
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source $HOME/.poetry/env
+install:
+  - poetry install
+script:
+  - poetry build
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: poetry publish --username $PYPI_USER --password $PYPI_PASS
+    on:
+      branch: master
+      python: '3.7'
+      tags: true
+
+И установите переменные окружения PYPI_USER и PYPI_PASS на travis-ci.com. После этого можно будет публиковать пакет с помощью команд:
+
+git tag -a v1.2 # Replace version number with yours
+git push --tags

@@ -1,0 +1,275 @@
+https://habr.com/ru/post/335074/
+
+Пишем и собираем приложения для Android в linux консоли
+
+https://habrastorage.org/r/w1560/getpro/habr/post_images/92d/afb/48a/92dafb48ab3e8bc6e37f50d01b8fcb8f.png
+
+В данной статье я покажу как можно собрать apk файл в Ubuntu используя лишь
+утилиты командной строки.
+
+Обычно для создания приложений для Adroid используется Android Studio. Но для сборки небольших программ можно обойтись командной строкой. Например, когда ресурсы компьютера ограничены и ваше приложение очень простое.
+
+В качестве постоянной среды разработки это, возможно, не очень удобно, но если вам нужно
+иногда собирать какие-нибудь мелкие утилиты — это в самый раз.
+
+Введение
+
+Разработка под Android не является основным направлением моей деятельности, я иногда делаю какие-то небольшие приложения для своих нужд.
+
+Раньше я использовал QPython, но он достаточно тяжел и неудобен в работе. Поэтому я перешел к разработке нативных программ. Даже при поверхностном знании Java
+это не составляет больших трудностей.
+
+Данное руководство в большой степени базируется на этом документе: Building an Android App
+from the Command Line (http://www.hanshq.net/command-line-android.html). Кому интересны подробности, обращайтесь к первоисточнику.
+
+Похожая статья: Пишем, собираем и запускаем HelloWorld для Android в блокноте (https://habrahabr.ru/post/210584/) уже встречалась на этом ресурсе, но в ней было рассмотрена разработка в Windows.
+
+Здесь же я рассмотрю, как можно собрать приложение в linux.
+
+Железо
+
+Тестирование проводилось на стареньком нетбуке с процессором Атом, 1Гб ОЗУ
+и 8Гб SSD диска.
+
+Операционная система
+
+Я тестировал приложение на Ubuntu 17.04. Начиная с Ubunu 16.04 android-sdk можно установить через пакетный менеджер.
+
+Загрузка SDK вручную:
+В принципе, тот же SDK можно
+скачать с сайта: https://developer.android.com/studio/index.html#downloads
+Качать файл из раздела 'Get just the command line tools'
+По сути это не сильно меняет процесс, но через пакетный менеджер все гораздо проще.
+Разница будет лишь в путях и установке дополнительных пакетов "android-platform".
+
+Установка пакетов
+
+Итак, приступим к установке.
+
+sudo apt install android-sdk
+
+Будет установлено большое количество пакетов, включая Java.
+
+Далее, в зависимости от требуемой версии Android, необходимо установить нужную
+версию пакетов. Для lolipop 5.1 необходимо ставить:
+
+sudo apt install google-android-platform-22-installer
+sudo apt install google-android-build-tools-22-installer
+
+Так же необходимо установить дополнительный пакет.
+
+sudo apt install apksigner
+
+Если вы планируете устанавливать apk-пакет через adb, то необходимо немного дополнительных настроек.
+
+Настройка adb
+
+С помощью lsusb найти подключенное устройство
+
+# lsusb
+....
+Bus 001 Device 004: ID 1782:75b0 MyDevice
+....
+
+И создать файл с правилом:
+
+sudo vi /etc/udev/rules.d/51-android.rules
+
+В файл добавить одну строку:
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="1782", MODE="0666", GROUP="plugdev"
+
+Здесь "1782" взято из вывода lsusb.
+
+Перезапускаем сервис
+
+sudo systemctl restart udev
+
+После подключения через adb, на устройстве необходимо подтвердить соединение.
+
+Теперь все готово к работе.
+
+Постановка задачи
+
+Приложение, которое будем собирать немного сложнее, чем 'Hello world'.
+
+ ● Требуется по нажатию кнопки взять строку из буфера обмена.
+ ● Вырезать подстроку
+ ● Записать подстроку обратно в буфер.
+ ● С помощь Toast вывести подстроку или сообщение об ошибке.
+
+В общем-то все просто.
+
+Я подготовил пример (https://bitbucket.org/kostya13/extract_video_id) который возьмем за основу.
+
+Создание подписи
+
+Сначала создадим ключ для подписи файла:
+
+keytool -genkeypair -keystore keystore.jks -alias androidkey \
+      -validity 10000 -keyalg RSA -keysize 2048 \
+      -storepass android -keypass android
+
+Это нам пригодится позже.
+
+Манифест
+
+AndroidManifest.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="ru.kx13.extractvidid"
+          versionCode="1"
+          versionName="0.1">
+    <uses-sdk android:minSdkVersion="22"/>
+    <application android:label="EctractId" 
+                                     android:icon="@drawable/icon" >
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+
+Здесь указываем имя приложения в атрибуте "android:label". Так же приложение будет использоваться свою иконку, она указана в атрибуте "android:icon". Сама иконка лежит в каталоге "res/drawable-mdpi" файл "icon.png". В качестве иконки можно взять любой небольшой png файл.
+
+Layout
+
+Файл с расположением элементов находится в каталоге "/res/layout/".
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_text"/>
+
+      <Button
+        android:id="@+id/button_id"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Извлечь" />
+
+</LinearLayout>
+
+В него можно добавлять виджеты, если вы захотите расширить функционал.
+
+Исходный код приложения
+
+Исходный код приложения находится здесь "java/ru/kx13/extractvidid"
+
+MainActivity.java:
+
+package ru.kx13.extractvidid;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.Toast;
+import android.view.View;
+import android.content.ClipboardManager;
+import android.content.ClipData;
+
+public class MainActivity extends Activity {
+  private static String extract(String s) {
+    int start = s.indexOf("%3D");
+    int end = s.indexOf("%26");
+    if(start == -1 ||  end == -1) {
+      return "error";
+    }
+    return s.substring(start + 3, end);
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    TextView text = (TextView)findViewById(R.id.my_text);
+    text.setText("Извлечь  youtube video id");
+    Button button = (Button) findViewById(R.id.button_id);
+    button.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        ClipboardManager myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData abc = myClipboard.getPrimaryClip();
+        ClipData.Item item = abc.getItemAt(0);
+        String text = item.getText().toString();
+        String video_id = MainActivity.extract(text);
+        ClipData myClip = ClipData.newPlainText("text", video_id);
+        myClipboard.setPrimaryClip(myClip);
+
+        Toast toast = Toast.makeText(getApplicationContext(), 
+            video_id, Toast.LENGTH_SHORT); 
+        toast.show(); 
+      }
+    });
+  }
+}
+
+Код весьма прост и примитивен, но этот шаблон можно использовать в других приложениях.
+
+Скрипт для сборки
+
+Я не стал использовать утилит сборки типа make или ant, т.к. весь код находится в одном файле и особых преимуществ это не даст. Поэтому это обычный shell скрипт:
+
+build.sh:
+
+#!/bin/sh
+SOURCE=ru/kx13/extractvidid
+BASE=/usr/lib
+SDK="${BASE}/android-sdk"
+BUILD_TOOLS="${SDK}/build-tools/22.0.1"
+PLATFORM="${SDK}/platforms/android-22"
+mkdir -p build/gen build/obj build/apk
+"${BUILD_TOOLS}/aapt" package -f -m -J build/gen/ -S res -M AndroidManifest.xml -I "${PLATFORM}/android.jar"
+javac -source 1.7 -target 1.7 -bootclasspath "${JAVA_HOME}/jre/lib/rt.jar" \
+         -classpath "${PLATFORM}/android.jar" -d build/obj \
+         build/gen/${SOURCE}/R.java java/${SOURCE}/MainActivity.java
+"${BUILD_TOOLS}/dx" --dex --output=build/apk/classes.dex build/obj/
+"${BUILD_TOOLS}/aapt" package -f -M AndroidManifest.xml -S res/  -I "${PLATFORM}/android.jar" \
+        -F build/Extractor.unsigned.apk build/apk/
+"${BUILD_TOOLS}/zipalign" -f 4 build/Extractor.unsigned.apk build/Extractor.aligned.apk
+apksigner sign --ks keystore.jks \
+        --ks-key-alias androidkey --ks-pass pass:android \
+              --key-pass pass:android --out build/Extractor.apk \
+              build/Extractor.aligned.apk
+
+Некоторые замечания по поводу путей.
+
+ ● По умолчанию, переменная BASE указывает на путь, в который пакетный менеджер сохраняет файлы. Если вы ставите SDK вручную, то путь надо будет изменить.
+ ● Если вы используете версию API отличную от 22, то вам надо подправить переменные BUILD_TOOLS и PLATFORM
+
+Сборка и установка
+
+Для сборки просто запустите
+
+./build.sh
+
+Если все настроено правильно никаких сообщений не будет выведено, а в каталоге "build" появится файл "Extractor.apk"
+
+Теперь надо установить наше приложение
+
+adb install -r build/Extractor.apk
+
+Если все прошло нормально, на устройстве появится новое приложение. Можно запускать и пользоваться.
+
+В общем случае можно перекинуть файл apk на устройство любым удобным способом.
+
+Заключение
+
+Как видно из статьи начать разработку в консоли совсем несложно.
+
+Консольные утилиты позволяют разрабатывать программы при весьма небольших ресурсах.
+
+Приятной разработки!

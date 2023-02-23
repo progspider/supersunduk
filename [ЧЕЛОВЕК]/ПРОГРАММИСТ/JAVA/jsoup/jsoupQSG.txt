@@ -1,0 +1,1341 @@
+https://coderlessons.com/tutorials/java-tekhnologii/uznaite-jsoup/jsoup-kratkoe-rukovodstvo
+
+jsoup - Краткое руководство - CoderLessons.com
+38 - 48 minutes
+
+jsoup — это библиотека на основе Java для работы с контентом на основе HTML. Он предоставляет очень удобный API для извлечения и обработки данных, используя лучшие методы DOM, CSS и jquery-подобные. Он реализует спецификацию WHATWG HTML5 и анализирует HTML в том же DOM, что и современные браузеры.
+
+Библиотека jsoup реализует спецификацию WHATWG HTML5 и анализирует содержимое HTML в том же DOM, что и в современных браузерах.
+
+Библиотека jsonp обеспечивает следующие функциональные возможности.
+
+    Поддержка множественного чтения — он читает и анализирует HTML, используя URL, файл или строку.
+
+    Селекторы CSS — могут находить и извлекать данные, используя обход DOM или селекторы CSS.
+
+    DOM Manipulation — может манипулировать HTML-элементами, атрибутами и текстом.
+
+    Предотвращать атаки XSS — он может очищать пользовательский контент от заданного безопасного белого списка, чтобы предотвратить атаки XSS.
+
+    Tidy — выводит чистый HTML.
+
+    Обрабатывает недействительные данные — jsoup может обрабатывать незамкнутые теги, неявные теги и может надежно создавать структуру документа.
+
+Поддержка множественного чтения — он читает и анализирует HTML, используя URL, файл или строку.
+
+Селекторы CSS — могут находить и извлекать данные, используя обход DOM или селекторы CSS.
+
+DOM Manipulation — может манипулировать HTML-элементами, атрибутами и текстом.
+
+Предотвращать атаки XSS — он может очищать пользовательский контент от заданного безопасного белого списка, чтобы предотвратить атаки XSS.
+
+Tidy — выводит чистый HTML.
+
+Обрабатывает недействительные данные — jsoup может обрабатывать незамкнутые теги, неявные теги и может надежно создавать структуру документа.
+Настройка локальной среды
+
+JUnit — это фреймворк для Java, поэтому самое первое требование — установить JDK на вашем компьютере.
+Системные требования
+JDK 	1,5 или выше.
+объем памяти 	Нет минимальных требований.
+Дисковое пространство 	Нет минимальных требований.
+Операционная система 	Нет минимальных требований.
+
+Шаг 1: Проверьте установку Java на вашем компьютере
+
+Прежде всего, откройте консоль и выполните команду Java в зависимости от операционной системы, с которой вы работаете.
+Операционные системы 	задача 	команда
+Windows 	Открытая командная консоль 	c: \> Java-версия
+Linux 	Открытый командный терминал 	$ java-версия
+макинтош 	Открытый терминал 	машина: <joseph $ java -version
+
+Давайте проверим вывод для всех операционных систем —
+Операционные системы 	Выход
+Windows 	
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Клиентская виртуальная машина Java HotSpot (TM) (сборка 17.0-b17, смешанный режим, совместное использование)
+Linux 	
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Клиентская виртуальная машина Java HotSpot (TM) (сборка 17.0-b17, смешанный режим, совместное использование)
+макинтош 	
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Java HotSpot (TM) 64-разрядная серверная виртуальная машина (сборка 17.0-b17, смешанный режим, совместное использование)
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Клиентская виртуальная машина Java HotSpot (TM) (сборка 17.0-b17, смешанный режим, совместное использование)
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Клиентская виртуальная машина Java HotSpot (TM) (сборка 17.0-b17, смешанный режим, совместное использование)
+
+Java-версия «1.6.0_21»
+
+Java (TM) SE Runtime Environment (сборка 1.6.0_21-b07)
+
+Java HotSpot (TM) 64-разрядная серверная виртуальная машина (сборка 17.0-b17, смешанный режим, совместное использование)
+
+Если у вас не установлена ​​Java в вашей системе, загрузите Java Software Development Kit (SDK) по следующей ссылке https://www.oracle.com . Мы предполагаем Java 1.6.0_21 в качестве установленной версии для этого урока.
+Шаг 2: Установите среду JAVA
+
+Установите переменную среды JAVA_HOME, чтобы она указывала на местоположение базовой директории, где установлена ​​Java на вашем компьютере. Например.
+Операционные системы 	Выход
+Windows 	Задайте для переменной среды JAVA_HOME значение C: \ Program Files \ Java \ jdk1.6.0_21.
+Linux 	экспорт JAVA_HOME = / usr / local / java-current
+макинтош 	export JAVA_HOME = / Библиотека / Java / Главная
+
+Добавьте местоположение компилятора Java в системный путь.
+Операционные системы 	Выход
+Windows 	Добавьте строку C: \ Program Files \ Java \ jdk1.6.0_21 \ bin в конце системной переменной Path .
+Linux 	экспорт PATH = $ PATH: $ JAVA_HOME / bin /
+макинтош 	не требуется
+
+Проверьте установку Java с помощью команды java -version, как описано выше.
+
+Шаг 3: Загрузите архив jsoup
+
+Загрузите последнюю версию jar-файла jsoup из репозитория Maven . На момент написания этого руководства мы загрузили jsoup-1.8.3.jar и скопировали его в папку C: \> jsoup.
+Операционные системы 	Название архива
+Windows 	jsoup-1.8.3.jar
+Linux 	jsoup-1.8.3.jar
+макинтош 	jsoup-1.8.3.jar
+
+Шаг 4: Установите среду jsoup
+
+Установите переменную среды JSOUP_HOME, чтобы она указывала на местоположение базовой директории, где jsoup jar хранится на вашем компьютере. Давайте предположим, что мы сохранили jsoup-1.8.3.jar в папке JSOUP.
+Sr.No 	ОС и описание
+1 	
+
+Windows
+
+Установите переменную среды JSOUP_HOME в C: \ JSOUP
+2 	
+
+Linux
+
+экспорт JSOUP_HOME = / usr / local / JSOUP
+3 	
+
+макинтош
+
+экспорт JSOUP_HOME = / Библиотека / JSOUP
+
+Windows
+
+Установите переменную среды JSOUP_HOME в C: \ JSOUP
+
+Linux
+
+экспорт JSOUP_HOME = / usr / local / JSOUP
+
+макинтош
+
+экспорт JSOUP_HOME = / Библиотека / JSOUP
+
+Шаг 5: Установите переменную CLASSPATH
+
+Установите переменную среды CLASSPATH, чтобы она указывала на местоположение JAR JSOUP.
+Sr.No 	ОС и описание
+1 	
+
+Windows
+
+Установите для переменной среды CLASSPATH значение% CLASSPATH%;% JSOUP_HOME% \ jsoup-1.8.3.jar;.;
+2 	
+
+Linux
+
+export CLASSPATH = $ CLASSPATH: $ JSOUP_HOME / jsoup-1.8.3.jar :.
+3 	
+
+макинтош
+
+export CLASSPATH = $ CLASSPATH: $ JSOUP_HOME / jsoup-1.8.3.jar :.
+
+Windows
+
+Установите для переменной среды CLASSPATH значение% CLASSPATH%;% JSOUP_HOME% \ jsoup-1.8.3.jar;.;
+
+Linux
+
+export CLASSPATH = $ CLASSPATH: $ JSOUP_HOME / jsoup-1.8.3.jar :.
+
+макинтош
+
+export CLASSPATH = $ CLASSPATH: $ JSOUP_HOME / jsoup-1.8.3.jar :.
+
+В следующем примере будет показан анализ строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+Описание
+
+Метод parse (String html) анализирует входной HTML в новый документ. Этот объект документа может использоваться, чтобы пройти и получить детали HTML-домена.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body><p>Sample Content</p></body></html>";
+      Document document = Jsoup.parse(html);
+      System.out.println(document.title());
+      Elements paragraphs = document.getElementsByTag("p");
+      for (Element paragraph : paragraphs) {
+            System.out.println(paragraph.text());
+      }
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Sample Title
+Sample Content
+
+В следующем примере будет показан анализ строки fragement HTML в объекте Element в виде тела html.
+Синтаксис
+
+Document document = Jsoup.parseBodyFragment(html);
+Element body = document.body();
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — HTML фрагмент строки.
+
+    body — представляет дочерний элемент элемента body документа и эквивалентен document.getElementsByTag («body»).
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — HTML фрагмент строки.
+
+body — представляет дочерний элемент элемента body документа и эквивалентен document.getElementsByTag («body»).
+Описание
+
+Метод parseBodyFragment (String html) анализирует входной HTML в новый документ. Этот объект документа может быть использован для прохождения и получения деталей фрагмента html тела.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<div><p>Sample Content</p>";
+      Document document = Jsoup.parseBodyFragment(html);
+      Element body = document.body();
+      Elements paragraphs = body.getElementsByTag("p");
+      for (Element paragraph : paragraphs) {
+         System.out.println(paragraph.text());
+      }
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Sample Content
+
+В следующем примере показано, как извлечь HTML из Интернета с помощью URL-адреса, а затем найти его данные.
+Синтаксис
+
+String url = "http://www.google.com";
+Document document = Jsoup.connect(url).get();
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для подключения URL- адреса и получения строки HTML.
+
+    url — URL-адрес html-страницы для загрузки.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для подключения URL- адреса и получения строки HTML.
+
+url — URL-адрес html-страницы для загрузки.
+Описание
+
+Метод connect (url) устанавливает соединение с url, а метод get () возвращает html запрошенного URL.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public class JsoupTester {
+   public static void main(String[] args) throws IOException {
+   
+      String url = "http://www.google.com";
+      Document document = Jsoup.connect(url).get();
+      System.out.println(document.title());
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Google
+
+В следующем примере будет показана загрузка HTML-кода с диска с использованием файла, а затем поиск его данных.
+Синтаксис
+
+String url = "http://www.google.com";
+Document document = Jsoup.connect(url).get();
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для подключения URL- адреса и получения строки HTML.
+
+    url — URL-адрес html-страницы для загрузки.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для подключения URL- адреса и получения строки HTML.
+
+url — URL-адрес html-страницы для загрузки.
+Описание
+
+Метод connect (url) устанавливает соединение с url, а метод get () возвращает html запрошенного URL.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public class JsoupTester {
+   public static void main(String[] args) throws IOException, URISyntaxException {
+      
+      URL path = ClassLoader.getSystemResource("test.htm");
+      File input = new File(path.toURI());
+      Document document = Jsoup.parse(input, "UTF-8");
+      System.out.println(document.title());
+   }
+}
+
+test.htm
+
+Создайте следующий файл test.htm в папке C: \ jsoup.
+
+<html>
+   <head>
+      <title>Sample Title</title>
+   </head>
+   <body>
+      <p>Sample Content</p>
+   </body>
+</html>
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Sample Title
+
+Следующий пример продемонстрирует использование методов, подобных DOM, после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element sampleDiv = document.getElementById("sampleDiv");
+Elements links = sampleDiv.getElementsByTag("a");
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    sampleDiv — Объект Element представляет элемент узла html, идентифицируемый идентификатором «sampleDiv».
+
+    ссылки — Элемент Elements представляет несколько узловых элементов, идентифицированных тегом «a».
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+sampleDiv — Объект Element представляет элемент узла html, идентифицируемый идентификатором «sampleDiv».
+
+ссылки — Элемент Elements представляет несколько узловых элементов, идентифицированных тегом «a».
+Описание
+
+Метод parse (String html) анализирует входной HTML в новый документ. Этот объект документа может использоваться, чтобы пройти и получить детали HTML-домена.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a href='www.google.com'>Google</a></div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+      System.out.println(document.title());
+      Elements paragraphs = document.getElementsByTag("p");
+      for (Element paragraph : paragraphs) {
+         System.out.println(paragraph.text());
+      }
+
+      Element sampleDiv = document.getElementById("sampleDiv");
+      System.out.println("Data: " + sampleDiv.text());
+      Elements links = sampleDiv.getElementsByTag("a");
+
+      for (Element link : links) {
+         System.out.println("Href: " + link.attr("href"));
+         System.out.println("Text: " + link.text());
+      }
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Sample Title
+Sample Content
+Data: Google
+Href: www.google.com
+Text: Google
+
+В следующем примере будет показано использование методов селектора после анализа строки HTML в объекте Document. jsoup поддерживает селекторы, подобные CSS-селекторам.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element sampleDiv = document.getElementById("sampleDiv");
+Elements links = sampleDiv.getElementsByTag("a");
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    sampleDiv — Объект Element представляет элемент узла html, идентифицируемый идентификатором «sampleDiv».
+
+    ссылки — Элемент Elements представляет несколько узловых элементов, идентифицированных тегом «a».
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+sampleDiv — Объект Element представляет элемент узла html, идентифицируемый идентификатором «sampleDiv».
+
+ссылки — Элемент Elements представляет несколько узловых элементов, идентифицированных тегом «a».
+Описание
+
+Метод document.select (expression) анализирует данное выражение селектора CSS, чтобы выбрать элемент html dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a href='www.google.com'>Google</a>"
+         + "<h3><a>Sample</a><h3>"
+         +"</div>"
+         + "<div id='imageDiv' class='header'><img name='google' src='google.png' />"
+         + "<img name='yahoo' src='yahoo.jpg' />"
+         +"</div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      //a with href
+      Elements links = document.select("a[href]");
+
+      for (Element link : links) {
+         System.out.println("Href: " + link.attr("href"));
+         System.out.println("Text: " + link.text());
+      }
+
+      // img with src ending .png
+      Elements pngs = document.select("img[src$=.png]");
+
+      for (Element png : pngs) {
+         System.out.println("Name: " + png.attr("name"));
+      }
+
+      // div with class=header
+      Element headerDiv = document.select("div.header").first();
+      System.out.println("Id: " + headerDiv.id());
+   
+      // direct a after h3
+      Elements sampleLinks = document.select("h3 > a"); 
+
+      for (Element link : sampleLinks) {
+         System.out.println("Text: " + link.text());
+      }
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Href: www.google.com
+Text: Google
+Name: google
+Id: imageDiv
+Text: Sample
+
+В следующем примере демонстрируется использование метода для получения атрибута элемента dom после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element link = document.select("a").first();
+System.out.println("Href: " + link.attr("href"));
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+    Метод link.attr () — attr (attribute) извлекает атрибут элемента.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+Метод link.attr () — attr (attribute) извлекает атрибут элемента.
+Описание
+
+Элемент element представляет элемент dom и предоставляет различные методы для получения атрибута элемента dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a href='www.google.com'>Google</a>"
+         + "<h3><a>Sample</a><h3>"
+         +"</div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      //a with href
+      Element link = document.select("a").first();         
+
+      System.out.println("Href: " + link.attr("href"));
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Href: www.google.com
+
+В следующем примере демонстрируется использование методов для получения текста после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element link = document.select("a").first();     
+System.out.println("Text: " + link.text());
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+    link.text () — метод text () извлекает текст элемента.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+link.text () — метод text () извлекает текст элемента.
+Описание
+
+Элемент element представляет элемент dom и предоставляет различные методы для получения текста элемента dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a href='www.google.com'>Google</a>"
+         + "<h3><a>Sample</a><h3>"
+         +"</div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      //a with href
+      Element link = document.select("a").first();         
+
+      System.out.println("Text: " + link.text());
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Text: Google
+
+В следующем примере демонстрируется использование методов для получения внутреннего html и внешнего html после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element link = document.select("a").first();         
+
+System.out.println("Outer HTML: " + link.outerHtml());
+System.out.println("Inner HTML: " + link.html());
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+    link.outerHtml () — метод externalHtml () извлекает полный элемент HTML.
+
+    Метод link.html () — html () извлекает внутренний элемент html.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+link.outerHtml () — метод externalHtml () извлекает полный элемент HTML.
+
+Метод link.html () — html () извлекает внутренний элемент html.
+Описание
+
+Элемент element представляет элемент dom и предоставляет различные методы для получения html-элемента dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a href='www.google.com'>Google</a>"
+         + "<h3><a>Sample</a><h3>"
+         +"</div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      //a with href
+      Element link = document.select("a").first();         
+
+      System.out.println("Outer HTML: " + link.outerHtml());
+      System.out.println("Inner HTML: " + link.html());
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Outer HTML: <a href="www.google.com">Google</a>
+Inner HTML: Google
+
+В следующем примере будут показаны методы, которые могут предоставлять как относительные, так и абсолютные URL-адреса, присутствующие на html-странице.
+Синтаксис
+
+String url = "http://www.tutorialspoint.com/";
+Document document = Jsoup.connect(url).get();
+Element link = document.select("a").first();         
+
+System.out.println("Relative Link: " + link.attr("href"));
+System.out.println("Absolute Link: " + link.attr("abs:href"));
+System.out.println("Absolute Link: " + link.absUrl("href"));
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для подключения к URL-адресу и получения HTML-контента.
+
+    link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+    link.attr («href») — предоставляет значение href, присутствующего в теге привязки. Это может быть относительным или абсолютным.
+
+    link.attr («abs: href») — предоставляет абсолютный URL после сопоставления с базовым URI документа.
+
+    link.absUrl («href») — предоставляет абсолютный URL после сопоставления с базовым URI документа.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для подключения к URL-адресу и получения HTML-контента.
+
+link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+link.attr («href») — предоставляет значение href, присутствующего в теге привязки. Это может быть относительным или абсолютным.
+
+link.attr («abs: href») — предоставляет абсолютный URL после сопоставления с базовым URI документа.
+
+link.absUrl («href») — предоставляет абсолютный URL после сопоставления с базовым URI документа.
+Описание
+
+Элемент объекта представляет собой элемент доменного имени и предоставляет методы для получения как относительных, так и абсолютных URL-адресов, присутствующих на html-странице.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) throws IOException {
+   
+      String url = "http://www.tutorialspoint.com/";
+      Document document = Jsoup.connect(url).get();
+
+      Element link = document.select("a").first();
+      System.out.println("Relative Link: " + link.attr("href"));
+      System.out.println("Absolute Link: " + link.attr("abs:href"));
+      System.out.println("Absolute Link: " + link.absUrl("href"));
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Relative Link: index.htm
+Absolute Link: https://www.tutorialspoint.com/index.htm
+Absolute Link: https://www.tutorialspoint.com/index.htm
+
+В следующем примере будет продемонстрировано использование метода для установки атрибутов элемента dom, массовых обновлений и добавления / удаления методов класса после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element link = document.select("a").first();         
+link.attr("href","www.yahoo.com");     
+link.addClass("header"); 
+link.removeClass("header");    
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+    Метод link.attr () — attr (attribute, value) устанавливает для атрибута элемента соответствующее значение.
+
+    link.addClass () — метод addClass (class) добавляет класс под атрибутом class.
+
+    link.removeClass () — метод removeClass (class) удаляет класс под атрибутом class.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+link — Элемент Element представляет элемент HTML-узла, представляющий тег привязки.
+
+Метод link.attr () — attr (attribute, value) устанавливает для атрибута элемента соответствующее значение.
+
+link.addClass () — метод addClass (class) добавляет класс под атрибутом class.
+
+link.removeClass () — метод removeClass (class) удаляет класс под атрибутом class.
+Описание
+
+Элемент element представляет элемент dom и предоставляет различные методы для получения атрибута элемента dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<p>Sample Content</p>"
+         + "<div id='sampleDiv'><a id='googleA' href='www.google.com'>Google</a></div>"
+         + "<div class='comments'><a href='www.sample1.com'>Sample1</a>"
+         + "<a href='www.sample2.com'>Sample2</a>"
+         + "<a href='www.sample3.com'>Sample3</a><div>"
+         +"</div>"
+         + "<div id='imageDiv' class='header'><img name='google' src='google.png' />"
+         + "<img name='yahoo' src='yahoo.jpg' />"
+         +"</div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      //Example: set attribute
+      Element link = document.getElementById("googleA");
+      System.out.println("Outer HTML Before Modification :"  + link.outerHtml());
+      link.attr("href","www.yahoo.com");      
+      System.out.println("Outer HTML After Modification :"  + link.outerHtml());
+      System.out.println("---");
+      
+      //Example: add class
+      Element div = document.getElementById("sampleDiv");
+      System.out.println("Outer HTML Before Modification :"  + div.outerHtml());
+      link.addClass("header");      
+      System.out.println("Outer HTML After Modification :"  + div.outerHtml());
+      System.out.println("---");
+      
+      //Example: remove class
+      Element div1 = document.getElementById("imageDiv");
+      System.out.println("Outer HTML Before Modification :"  + div1.outerHtml());
+      div1.removeClass("header");      
+      System.out.println("Outer HTML After Modification :"  + div1.outerHtml());
+      System.out.println("---");
+      
+      //Example: bulk update
+      Elements links = document.select("div.comments a");
+      System.out.println("Outer HTML Before Modification :"  + links.outerHtml());
+      links.attr("rel", "nofollow");
+      System.out.println("Outer HTML Before Modification :"  + links.outerHtml());
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Outer HTML Before Modification :<a id="googleA" href="www.google.com">Google</a>
+Outer HTML After Modification :<a id="googleA" href="www.yahoo.com">Google</a>
+---
+Outer HTML Before Modification :<div id="sampleDiv">
+ <a id="googleA" href="www.yahoo.com">Google</a>
+</div>
+Outer HTML After Modification :<div id="sampleDiv">
+ <a id="googleA" href="www.yahoo.com" class="header">Google</a>
+</div>
+---
+Outer HTML Before Modification :<div id="imageDiv" class="header">
+ <img name="google" src="google.png">
+ <img name="yahoo" src="yahoo.jpg">
+</div>
+Outer HTML After Modification :<div id="imageDiv" class="">
+ <img name="google" src="google.png">
+ <img name="yahoo" src="yahoo.jpg">
+</div>
+---
+Outer HTML Before Modification :<a href="www.sample1.com">Sample1</a>
+<a href="www.sample2.com">Sample2</a>
+<a href="www.sample3.com">Sample3</a>
+Outer HTML Before Modification :<a href="www.sample1.com" rel="nofollow">Sample1</a>
+<a href="www.sample2.com" rel="nofollow">Sample2</a>
+<a href="www.sample3.com" rel="nofollow">Sample3</a>
+
+В следующем примере демонстрируется использование метода для установки, добавления или добавления html к элементу dom после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element div = document.getElementById("sampleDiv");     
+div.html("<p>This is a sample content.</p>");   
+div.prepend("<p>Initial Text</p>");
+div.append("<p>End Text</p>");   
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    div — Элемент Element представляет элемент html-узла, представляющий тег привязки.
+
+    div.html () — метод html (content) заменяет внешний html элемента соответствующим значением.
+
+    div.prepend () — метод prepend (content) добавляет контент перед внешним html.
+
+    div.append () — метод append (content) добавляет контент после внешнего html.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+div — Элемент Element представляет элемент html-узла, представляющий тег привязки.
+
+div.html () — метод html (content) заменяет внешний html элемента соответствующим значением.
+
+div.prepend () — метод prepend (content) добавляет контент перед внешним html.
+
+div.append () — метод append (content) добавляет контент после внешнего html.
+Описание
+
+Элемент object представляет элемент dom и предоставляет различные методы для установки, добавления или добавления html к элементу dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+   
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<div id='sampleDiv'><a id='googleA' href='www.google.com'>Google</a></div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      Element div = document.getElementById("sampleDiv");
+      System.out.println("Outer HTML Before Modification :\n"  + div.outerHtml());
+      div.html("<p>This is a sample content.</p>");
+      System.out.println("Outer HTML After Modification :\n"  + div.outerHtml());
+      div.prepend("<p>Initial Text</p>");
+      System.out.println("After Prepend :\n"  + div.outerHtml());
+      div.append("<p>End Text</p>");
+      System.out.println("After Append :\n"  + div.outerHtml());          
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Outer HTML Before Modification :
+<div id="sampleDiv">
+ <a id="googleA" href="www.google.com">Google</a>
+</div>
+Outer HTML After Modification :
+<div id="sampleDiv">
+ <p>This is a sample content.</p>
+</div>
+After Prepend :
+<div id="sampleDiv">
+ <p>Initial Text</p>
+ <p>This is a sample content.</p>
+</div>
+After Append :
+<div id="sampleDiv">
+ <p>Initial Text</p>
+ <p>This is a sample content.</p>
+ <p>End Text</p>
+</div>
+Outer HTML Before Modification :
+<span>Sample Content</span>
+Outer HTML After Modification :
+<span>Sample Content</span>
+
+Следующий пример продемонстрирует использование метода для установки, добавления или добавления текста к элементу dom после анализа строки HTML в объекте Document.
+Синтаксис
+
+Document document = Jsoup.parse(html);
+Element div = document.getElementById("sampleDiv");     
+div.text("This is a sample content.");   
+div.prepend("Initial Text.");
+div.append("End Text.");   
+
+куда
+
+    document — объект документа представляет HTML DOM.
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    HTML — строка HTML.
+
+    div — Элемент Element представляет элемент html-узла, представляющий тег привязки.
+
+    div.text () — метод text (content) заменяет содержимое элемента соответствующим значением.
+
+    div.prepend () — метод prepend (content) добавляет контент перед внешним html.
+
+    div.append () — метод append (content) добавляет контент после внешнего html.
+
+document — объект документа представляет HTML DOM.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+HTML — строка HTML.
+
+div — Элемент Element представляет элемент html-узла, представляющий тег привязки.
+
+div.text () — метод text (content) заменяет содержимое элемента соответствующим значением.
+
+div.prepend () — метод prepend (content) добавляет контент перед внешним html.
+
+div.append () — метод append (content) добавляет контент после внешнего html.
+Описание
+
+Элемент object представляет элемент dom и предоставляет различные методы для установки, добавления или добавления html к элементу dom.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+
+      String html = "<html><head><title>Sample Title</title></head>"
+         + "<body>"
+         + "<div id='sampleDiv'><a id='googleA' href='www.google.com'>Google</a></div>"
+         +"</body></html>";
+      Document document = Jsoup.parse(html);
+
+      Element div = document.getElementById("sampleDiv");
+      System.out.println("Outer HTML Before Modification :\n"  + div.outerHtml());
+      div.text(This is a sample content.");
+      System.out.println("Outer HTML After Modification :\n"  + div.outerHtml());
+      div.prepend("Initial Text.");
+      System.out.println("After Prepend :\n"  + div.outerHtml());
+      div.append("End Text.");
+      System.out.println("After Append :\n"  + div.outerHtml());
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+
+Outer HTML Before Modification :
+<div id="sampleDiv">
+ <a id="googleA" href="www.google.com">Google</a>
+</div>
+Outer HTML After Modification :
+<div id="sampleDiv">
+ This is a sample content.
+</div>
+After Prepend :
+<div id="sampleDiv">
+ Initial Text.This is a sample content.
+</div>
+After Append :
+<div id="sampleDiv">
+ Initial Text.This is a sample content.End Text.
+</div>
+
+В следующем примере демонстрируется предотвращение атак XSS или межсайтовых скриптов.
+Синтаксис
+
+String safeHtml =  Jsoup.clean(html, Whitelist.basic());  
+
+куда
+
+    Jsoup — основной класс для разбора заданной строки HTML.
+
+    html — исходная строка HTML.
+
+    safeHtml — очищенный HTML.
+
+    Белый список — Объект, предоставляющий конфигурации по умолчанию для защиты HTML.
+
+    clean () — очищает HTML с помощью белого списка.
+
+Jsoup — основной класс для разбора заданной строки HTML.
+
+html — исходная строка HTML.
+
+safeHtml — очищенный HTML.
+
+Белый список — Объект, предоставляющий конфигурации по умолчанию для защиты HTML.
+
+clean () — очищает HTML с помощью белого списка.
+Описание
+
+Объект Jsoup очищает html с использованием конфигураций белого списка.
+пример
+
+Создайте следующую Java-программу, используя любой редактор по вашему выбору, например, C: /> jsoup.
+
+JsoupTester.java
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
+public class JsoupTester {
+   public static void main(String[] args) {
+
+      String html = "<p><a href='http://example.com/'"
+         +" onclick='checkData()'>Link</a></p>";
+
+      System.out.println("Initial HTML: " + html);
+      String safeHtml =  Jsoup.clean(html, Whitelist.basic());
+
+      System.out.println("Cleaned HTML: " +safeHtml);
+   }
+}
+
+Проверьте результат
+
+Скомпилируйте класс с помощью компилятора javac следующим образом:
+
+C:\jsoup>javac JsoupTester.java
+
+Теперь запустите JsoupTester, чтобы увидеть результат.
+
+C:\jsoup>java JsoupTester
+
+Смотрите результат.
+

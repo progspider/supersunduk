@@ -1,0 +1,4 @@
+https://javarush.ru/groups/posts/2007-legkiy-parsing-html-s-pomojshjhju-jsoup
+https://javarush.ru/groups/posts/2767-parsing-html-bibliotekoy-jsoup-
+
+https://o7planning.org/ru/10399/jsoup-java-html-parser-tutorial

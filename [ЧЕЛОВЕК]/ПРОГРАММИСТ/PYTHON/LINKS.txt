@@ -1,0 +1,15 @@
+python вывод цветного текста
+https://all-python.ru/osnovy/tsvetnoj-vyvod-teksta.html
+https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#background-colors
+
+https://habr.com/ru/post/149898/ Полноценное Python приложение на Android
+https://habr.com/ru/post/325626/  Собираем проект на python3&PyQT5 под Windows, используя PyInstaller
+
+
+https://habr.com/ru/post/241211/             Пошаговая инструкция к созданию торгового робота на Python
+http://profitraders.com/Python/Python.html   Язык Python для трейдера
+https://www.mql5.com/ru/docs/integration/python_metatrader5
+
+https://pypi.org/ - каталог программного обеспечения, написанного на языке программирования Python.
+
+https://habr.com/ru/post/466441/ Глючный код на Python: 10 самых распространенных ошибок, которые допускают разработчики

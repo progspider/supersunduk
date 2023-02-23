@@ -1,0 +1,3 @@
+Обработка строк в Java
+http://proglang.su/java/strings-replace 14.20. Java — Метод replace()
+https://habr.com/ru/post/260767/ Обработка строк в Java. Часть I: String, StringBuffer, StringBuilder

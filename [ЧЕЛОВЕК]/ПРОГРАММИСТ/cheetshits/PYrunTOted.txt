@@ -1,0 +1,7 @@
+How to run python program with Notepad++
+
+1. Меню Run >> Run...
+2. В окне вводим путь и параметры. И сохранить, задав горячие файлы.
+
+Пример:  C:\Python39\python.exe "$(FULL_CURRENT_PATH)"
+Либо: C:\Python39\python.exe -i "$(FULL_CURRENT_PATH)"   -i это чтобы окно терминала сразу не закрывалось

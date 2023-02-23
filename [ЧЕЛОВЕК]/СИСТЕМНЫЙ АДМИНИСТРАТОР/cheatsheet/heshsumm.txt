@@ -1,0 +1,26 @@
+https://zen.yandex.ru/media/internet_lab/windows-10--vychislit-heshsummu-faila-v-komandnoi-stroke-60d6d421592c8c51d4bef3d3
+
+Windows 10 — вычислить хеш-сумму файла в командной строке
+
+Вычислить хеш-сумму файла в Windows 10 можно с помощью встроенной утилиты certutil с параметром -hashfile. Команда позволяет создать и отобразить криптографический хэш файла.
+
+Синтаксис: CertUtil [Параметры] -hashfile InFile [HashAlgorithm]
+
+Справку по работе с хеш-суммами можно запросить командой: certutil -hashfile -?
+
+Хэш-алгоритмы:
+
+ ● MD2
+ ● MD4
+ ● MD5
+ ● SHA1
+ ● SHA256
+ ● SHA384
+ ● SHA512
+
+Пример: certutil -hashfile "C:\distrib\Windows10Upgrade24074.exe" MD5
+
+Вывести только хэш: certutil -hashfile "C:\distrib\Windows10Upgrade24074.exe" MD5 | findstr ^[0-9a-f]$
+
+Источник:
+https://internet-lab.ru/win_hash_cmd

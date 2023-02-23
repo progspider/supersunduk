@@ -1,0 +1,5 @@
+https://habr.com/ru/post/127584/ Grab — python библиотека для парсинга сайтов
+
+https://grab-russian.readthedocs.io/ru/latest/grab/tutorial.html БОЛЬШАЯ СПРАВКА
+
+https://ivan-shamaev.ru/example-of-parsing-products-from-an-online-store-python-grab/ Пример парсинга товаров с интернет-магазина на Python Grab

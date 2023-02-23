@@ -1,0 +1,48 @@
+https://repl.it/ REPL — форма организации простой интерактивной среды программирования в рамках средств интерфейса командной строки.
+
+https://xakep.ru/2014/09/24/phonegap/ Как создать программу для смартфона за полчаса
+
+https://habr.com/ru/post/135822/ Скрипт для Notepad++ на Python
+
+https://habr.com/ru/post/278827/ Жизнь разработчика (в картинках)
+
+https://m.habr.com/ru/post/435520/ Пишем свой язык программирования, часть 3: Архитектура транслятора.
+
+https://m.habr.com/ru/post/133087/ HelloWorld — это просто? (Очень трудные языки программирования)
+http://helloworldcollection.de/
+
+https://m.habr.com/ru/post/190388/ Впечатляющие примеры WebGL
+
+https://m.habr.com/ru/post/38208/ jQuery для начинающих
+
+https://info-comp.ru/obucheniest/81--bat-.html Написание bat файлов — примеры батников
+https://info-comp.ru/obucheniest/196-bat-file-part-2.html BAT файлы – примеры батников (Часть 2)
+
+http://www.cyberforum.ru/vbscript-wsh/thread1361549.html VBS SendKeys в определенном окне
+
+http://golang-book.ru/
+https://proglib.io/p/go-programming/
+https://metanit.com/go/tutorial/1.2.php
+http://foxima.org/golang/
+https://gobyexample.ru/ Go в примерах
+https://codex.so/go-tutorial Разработка на Go. Первые шаги
+https://proglib.io/p/golinks/ Более 200 избранных ссылок на материалы о языке Go
+
+https://proglib.io/p/great-python-projects/ 100+ крутых проектов, созданных с помощью Python
+
+https://proglib.io/p/framework-or-library Фреймворк или библиотека? А в чем, собственно, разница?
+
+https://habr.com/ru/post/247473/ JSON, который можно комментировать
+https://habr.com/ru/post/554274/  Что такое JSON
+
+https://tproger.ru/books/create-os/ Как создать свою операционную систему с нуля
+
+https://habr.com/ru/company/skillbox/blog/443412/ Многословный Java, против лаконичного Python
+
+Фриланс платформа:
+1. https://kwork.ru/
+2. https://work-zilla.com/
+
+https://xakep.ru/2015/01/08/google-apps-script/ Google Apps Script
+
+https://habr.com/ru/post/255549/  Запоминаем просмотренные видео на youtube

@@ -1,0 +1,15 @@
+https://github.com/ilyachalov/lafore-book-examples Примеры и решения упражнений из книги Роберта Лафоре «ООП в C++».
+https://github.com/grey-software/Material-Math Игра калькулятор.
+
+https://github.com/tuhdo/os01 Книга «Операционная система с 0 до 1»
+
+https://github.com/Pianzin/binance-trader
+https://github.com/Pianzin/binance-java-api
+
+https://github.com/LabinatorSolutions/stockfish-chess-web-gui
+https://github.com/antiproton/Web-GUI-for-stockfish-chess
+http://chessboardjs.com/
+https://stockfishchess.org/
+
+https://github.com/qurihara/Threejs-Tetris-3DModeler   Игра тетрис
+https://www.github.com/linuxmint/webapp-manager Программа Web-приложение из Linux Mint.

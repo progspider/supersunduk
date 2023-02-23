@@ -1,0 +1,4 @@
+https://proglib.io/p/parsing-course
+https://habr.com/ru/post/280238/
+https://habr.com/ru/post/224081/ Как писать парсеры на JavaScript
+https://tproger.ru/translations/web-scraping-node-js/
