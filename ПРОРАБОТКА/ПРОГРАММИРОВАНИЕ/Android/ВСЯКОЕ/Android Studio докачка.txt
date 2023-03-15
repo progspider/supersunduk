@@ -1,0 +1,60 @@
+Preparing "Install Android Emulator (revision: 31.3.13)".
+Downloading https://dl.google.com/android/repository/emulator-linux_x64-9189900.zip
+"Install Android Emulator (revision: 31.3.13)" ready.
+Installing Android Emulator in /home/ruslan/Android/Sdk/emulator
+"Install Android Emulator (revision: 31.3.13)" complete.
+"Install Android Emulator (revision: 31.3.13)" finished.
+Preparing "Install Google APIs Intel x86 Atom_64 System Image (revision: 7)".
+Downloading https://dl.google.com/android/repository/sys-img/google_apis/x86_64-33_r07.zip
+java.io.IOException: Connection closed at byte 1501315072. Expected 1510432281 bytes.
+Warning: An error occurred while preparing SDK package Google APIs Intel x86 Atom_64 System Image: Connection closed at byte 1501315072. Expected 1510432281 bytes..
+"Install Google APIs Intel x86 Atom_64 System Image (revision: 7)" failed.
+Preparing "Install Sources for Android 33 (revision: 1)".
+Downloading https://dl.google.com/android/repository/sources-33_r01.zip
+"Install Sources for Android 33 (revision: 1)" ready.
+Installing Sources for Android 33 in /home/ruslan/Android/Sdk/sources/android-33
+"Install Sources for Android 33 (revision: 1)" complete.
+"Install Sources for Android 33 (revision: 1)" finished.
+Preparing "Install Android SDK Platform 33 (revision: 2)".
+Downloading https://dl.google.com/android/repository/platform-33_r02.zip
+"Install Android SDK Platform 33 (revision: 2)" ready.
+Installing Android SDK Platform 33 in /home/ruslan/Android/Sdk/platforms/android-33
+"Install Android SDK Platform 33 (revision: 2)" complete.
+"Install Android SDK Platform 33 (revision: 2)" finished.
+Preparing "Install Android SDK Build-Tools 33 (revision: 33.0.0)".
+Downloading https://dl.google.com/android/repository/build-tools_r33-linux.zip
+"Install Android SDK Build-Tools 33 (revision: 33.0.0)" ready.
+Installing Android SDK Build-Tools 33 in /home/ruslan/Android/Sdk/build-tools/33.0.0
+"Install Android SDK Build-Tools 33 (revision: 33.0.0)" complete.
+"Install Android SDK Build-Tools 33 (revision: 33.0.0)" finished.
+Preparing "Install Android SDK Platform-Tools (revision: 33.0.3)".
+Downloading https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip
+"Install Android SDK Platform-Tools (revision: 33.0.3)" ready.
+Installing Android SDK Platform-Tools in /home/ruslan/Android/Sdk/platform-tools
+"Install Android SDK Platform-Tools (revision: 33.0.3)" complete.
+"Install Android SDK Platform-Tools (revision: 33.0.3)" finished.
+Parsing /home/ruslan/Android/Sdk/build-tools/33.0.0/package.xml
+Parsing /home/ruslan/Android/Sdk/emulator/package.xml
+Parsing /home/ruslan/Android/Sdk/patcher/v4/package.xml
+Parsing /home/ruslan/Android/Sdk/platform-tools/package.xml
+Parsing /home/ruslan/Android/Sdk/platforms/android-33/package.xml
+Parsing /home/ruslan/Android/Sdk/sources/android-33/package.xml
+java.io.IOException: Connection closed at byte 1501315072. Expected 1510432281 bytes.
+Warning: An error occurred while preparing SDK package Google APIs Intel x86 Atom_64 System Image: Connection closed at byte 1501315072. Expected 1510432281 bytes..
+
+Preparing "Install Google APIs Intel x86 Atom_64 System Image (revision: 7)".
+Downloading https://dl.google.com/android/repository/sys-img/google_apis/x86_64-33_r07.zip
+"Install Google APIs Intel x86 Atom_64 System Image (revision: 7)" ready.
+Installing Google APIs Intel x86 Atom_64 System Image in /home/ruslan/Android/Sdk/system-images/android-33/google_apis/x86_64
+"Install Google APIs Intel x86 Atom_64 System Image (revision: 7)" complete.
+"Install Google APIs Intel x86 Atom_64 System Image (revision: 7)" finished.
+Parsing /home/ruslan/Android/Sdk/build-tools/33.0.0/package.xml
+Parsing /home/ruslan/Android/Sdk/emulator/package.xml
+Parsing /home/ruslan/Android/Sdk/patcher/v4/package.xml
+Parsing /home/ruslan/Android/Sdk/platform-tools/package.xml
+Parsing /home/ruslan/Android/Sdk/platforms/android-33/package.xml
+Parsing /home/ruslan/Android/Sdk/sources/android-33/package.xml
+Parsing /home/ruslan/Android/Sdk/system-images/android-33/google_apis/x86_64/package.xml
+Android SDK is up to date.
+Creating Android virtual device
+Android virtual device Pixel_3a_API_33_x86_64 was successfully created
