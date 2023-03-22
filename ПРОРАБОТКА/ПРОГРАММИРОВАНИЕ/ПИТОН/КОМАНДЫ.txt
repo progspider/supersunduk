@@ -1,0 +1,5 @@
+КОМАНДЫ Python
+
+Узнать версию python: python --version
+                      python3 --version (в случае если установлен второй python, например на MacOS и некоторые версии линукс)
+

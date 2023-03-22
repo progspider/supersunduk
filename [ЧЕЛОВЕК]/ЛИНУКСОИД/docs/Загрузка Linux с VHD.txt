@@ -1,0 +1,192 @@
+https://habr.com/ru/company/domclick/blog/547150/   (sorcodiv, 16 мар 2021 в 12:00)
+
+Загрузка Linux с VHD на компьютере с BIOS
+
+Загрузка Linux с VHD может пригодиться в различных сценариях, например, когда на компьютере установлена Windows и есть необходимость в Linux, но WSL или виртуальной машины с Linux недостаточно, а разбивать диск на разделы нет желания. Microsoft позволяет грузить Windows с VHD «из коробки» начиная со старших редакций Windows 7. Но что делать, если возникла необходимость загрузить таким способом Linux?
+
+На форумах часто можно встретить мнение, что загрузить Linux с VHD либо нельзя (https://forum.ubuntu.ru/index.php?topic=284154.0), либо очень сложно (https://forum.ru-board.com/topic.cgi?forum=5&topic=37297&start=340#2). Полезной информации в интернете на эту тему действительно мало. Базовая идея, как это осуществить, описана тут (http://reboot.pro/index.php?showtopic=20603&page=5#entry210378). Суть в следующем:
+
+ 1. Необходимо убедиться в поддержке NTFS на всех этапах.
+ 2. Необходимо убедиться в поддержке loop-устройств.
+ 3. Добавить в загрузочные скрипты ОС команду монтирования loop-устройства.
+ 4. Перестроить initramfs.
+ 5. Убедиться, что все необходимые утилиты добавлены в образ, обновить initramfs внутри VHD.
+ 6. В случае legacy-зарузки (BIOS) и использования штатного загрузчика Windows добавить grub4dos в меню bootmgr, а в меню grub4dos добавить пункт для загрузки с VHD.
+
+Практическое применение этой идеи для Arch Linux описано тут (http://reboot.pro/index.php?showtopic=20603&page=2#entry200203). В этой статье я проведу аналогичный эксперимент с Debian (https://www.debian.org/). Предполагается, что читатель имеет представление о работе с консолью в Windows и в Linux, умеет работать со стандартными системными утилитами, с ПО для виртуализации и т.п. — элементарные вещи подробно не расписаны.
+
+Процесс загрузки будет выглядеть так: bootmgr -> grub4dos -> initramfs -> debian. Рассмотрим подготовку каждого этапа справа налево.
+
+Установка Linux на VHD
+
+Для начала необходимо создать пустой образ VHD с фиксированным размером. Если нужно минимизировать размер образа, то для экспериментов с CLI достаточно создать диск объемом ~1,5 Гб. Для рабочей системы с GUI можно ограничиться объемом 10 Гб (с условием хранения пользовательских данных вне VHD).
+
+Создадим VHD с помощью diskpart.exe:  create vdisk file=<path_to_vhd>\debian.vhd type=fixed maximum=1500
+
+Далее необходимо установить Debian на VHD. Я для этого воспользовался VirtualBox 6.1, устанавливал debian-10.8.0-amd64-netinst.iso. Параметры виртуальной машины — по умолчанию, новый диск создавать не надо, достаточно подключить ранее созданный debian.vhd.
+
+Параметры VirtualBox: https://habrastorage.org/r/w1560/getpro/habr/upload_files/290/523/e95/290523e95c42f9e1af0ec0bf16ec85c2.png
+
+Установка Debian стандартна, обращу внимание только на некоторые моменты.
+
+При разметке диска я создал один загрузочный раздел ext4. Раздел подкачки на VHD я делать не стал, после установки можно разместить файл или раздел подкачки в удобном месте.
+
+Разметка диска: https://habrastorage.org/r/w1560/getpro/habr/upload_files/ef3/749/aaf/ef3749aaf893fc9fddd2d0d01fbb9a7e.png
+
+При выборе дополнительного ПО для установки я оставил только SSH-сервер и стандартные системные утилиты. Всё остальное можно поставить потом, по необходимости. GRUB установлен в MBR. Если при установке была выбрана русская локаль, то после установки можно добавить локаль en_US командой dpkg-reconfigure locales.
+
+Подготовка Linux к загрузке с VHD
+
+В установленную систему необходимо добавить поддержку NTFS и утилиту partprobe, которая позволяет сообщить (http://rus-linux.net/MyLDP/BOOKS/LSA/ch05.html) ядру ОС о необходимости повторного чтения таблицы разделов жёсткого диска.
+
+apt-get install ntfs-3g parted
+
+Затем надо подготовить скрипты для initramfs.
+
+initramfs — это начальная файловая система в оперативной памяти, которая содержит утилиты и скрипты, требуемые для монтирования файловых систем перед вызовом init, располагающегося в корневой файловой системе. (https://wiki.gentoo.org/wiki/Initramfs/Guide/ru)
+
+Скрипты для initramfs созданы на основе документации (http://manpages.ubuntu.com/manpages/xenial/man8/initramfs-tools.8.html). Наши дополнения для initramfs мы будем размещать в следующих каталогах.
+
+ ● /etc/initramfs-tools/hooks/ — здесь размещаются скрипты, которые запускаются при генерации initramfs-образа. Тут мы разместим скрипт для добавления в initramfs утилиты partprobe с необходимыми библиотеками.
+
+ ● /etc/initramfs-tools/scripts/local-top/ — после выполнения этих скриптов загрузчик считает, что root-устройство смонтировано. Т.е. здесь будет скрипт для монтирования VHD.
+
+Скрипт для добавления partprobe в initramfs возьмем из этой статьи (https://habr.com/ru/post/457260/) с добавлением еще одной библиотеки. Надо создать файл partcopy и сделать его исполняемым:
+
+partcopy:
+
+#!/bin/sh
+cp -p /sbin/partprobe "$DESTDIR/bin/partprobe"
+cp -p /lib/x86_64-linux-gnu/libparted.so.2 "$DESTDIR/lib/x86_64-linux-gnu/libparted.so.2"
+cp -p /lib/x86_64-linux-gnu/libreadline.so.7 "$DESTDIR/lib/x86_64-linux-gnu/libreadline.so.7"
+cp -p /lib/x86_64-linux-gnu/libtinfo.so.6 "$DESTDIR/lib/x86_64-linux-gnu/libtinfo.so.6"
+
+Скрипт для монтирования VHD сделан на основе скрипта для Arch Linux (http://reboot.pro/index.php?showtopic=20603&page=2#entry200203) с учетом особенностей выбранного дистрибутива Linux. Скрипт необходимо сохранить под именем loop_boot_vhd и сделать исполняемым:
+
+loop_boot_vhd:
+
+#!/bin/sh
+
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+cmdline=$(cat /proc/cmdline)
+#cmdline="root=/dev/loop0p1 loop_file_path=/debtst.vhd loop_dev_path=/dev/sda2"
+
+for x in $cmdline; do
+	value=${x#*=}
+	case ${x} in
+		root=*) value_loop_check=${value#*loop}
+			if [ x$value_loop_check != x$value ]
+				then loop_dev=${value%p*}
+				loop_part_num=${value##*p}
+				else echo "Root device is not a loop device. loopboot hook will be terminated."; return
+			fi ;;
+		loop_file_path=*) loop_file_path=$value ;;
+		loop_dev_path=*) loop_dev_path=$value ;;
+	esac
+done
+
+if [ -z $loop_file_path ] || [ -z $loop_dev_path ]
+	then echo "Either loop_file_path or loop_dev_path parameter does not specified. loopboot hook will be terminated."; return
+fi
+#modprobe fuse
+modprobe loop max_part=64 max_loop=8
+loop_dev_type=$(blkid -s TYPE -o value $loop_dev_path)
+if [ ! -d /host ]; then
+	mkdir /host
+fi
+if [ "$loop_dev_type" != "ntfs" ]
+	then mount -t $loop_dev_type $loop_dev_path /host; echo "mount -t $loop_dev_type $loop_dev_path /host"; echo "mounted using mount";
+	else ntfs-3g $loop_dev_path /host; echo "mounted using ntfs-3g";
+fi
+losetup $loop_dev /host$loop_file_path
+partprobe $loop_dev
+
+
+Немного подробнее поясню логику работы скрипта. Обработка prereqs рекомендована в документации (http://manpages.ubuntu.com/manpages/xenial/man8/initramfs-tools.8.html). В переменную cmdline попадает строка инициализации из grub4dos, например, root=/dev/loop0p1 loop_file_path=/debian.vhd loop_dev_path=/dev/sda2. Далее идет разбор этой строки и из нее определяется номер партиции на loop-устройстве, а в переменные loop_dev_path и loop_file_path сохраняются путь к устройству, на котором хранится VHD-файл, и путь к VHD-файлу на устройстве. Если данные для этих переменных не переданы, то скрипт прекращает работу и система пытается загрузиться в обычном режиме. Если переменные определены, то загружается модуль ядра для подержки loop-устройств с указанием в параметрах максимального количества loop-устройств и максимального количества таблиц разделов на loop-устройстве. Затем командой blkid определяется тип файловой системы диска, на котором хранится VHD-файл. Если VHD лежит на NTFS, то монтирование производится с помощью команды ntfs-3g, иначе — командой mount. Монтирование производится в каталог /host (который при необходимости предварительно создается). После этого VHD подключается в систему командой losetup, а затем partprobe сообщает ядру о новом диске.
+
+После размещения скриптов в нужные каталоги (/etc/initramfs-tools/scripts/local-top/loop_boot_vhd и /etc/initramfs-tools/hooks/partcopy) необходимо пересобрать initramfs командой:
+
+update-initramfs -c -k all
+
+Для дальнейшей настройки надо запомнить номер версии ядра: /boot/initrd.img-4.19.0-14-amd64 и /boot/vmlinuz-4.19.0-14-amd64.
+
+На этом образ готов к запуску на реальном железе, можно выключать виртуальную машину и приступать к подготовке загрузчика. Готовый образ debian.vhd надо скопировать в корень диска C:, дальнейшие скрипты написаны исходя из предположения, что VHD находится в корне NTFS-раздела.
+
+Настройка grub4dos
+
+Для начала надо скачать актуальную версию grub4dos (https://github.com/chenall/grub4dos/releases). Работа с этой утилитой в различных источниках описана достаточно подробно (http://greenflash.su/Grub4Dos/Grub4dos.htm). Настройка сводится к следующему:
+
+ ● необходимо найти раздел, в корне которого лежит VHD-файл, и сделать его корневым для всех команд в текущем пункте меню (команда find --set-root);
+ ● затем загрузить образ жесткого диска (команды map ...vhd и map --hook);
+ ● далее подключенный образ указать как корневое устройство (команда root);
+ ● и указать параметры запуска Linux (kernel и initrd).
+
+Получается файл menu.lst с таким содержимым:
+
+title debian
+find --set-root --ignore-floppies --ignore-cd /debian.vhd
+map /debian.vhd (hd3)
+map --hook
+root (hd3,0)
+kernel /boot/vmlinuz-4.19.0-14-amd64 root=/dev/loop0p1 rw loop_file_path=/debian.vhd loop_dev_path=/dev/sda2
+initrd /boot/initrd.img-4.19.0-14-amd64
+
+Тут надо обратить внимание на один момент: в команде kernel инициализируются переменные, которые передаются в initramfs и используются в ранее созданном скрипте loop_boot_vhd.
+
+В моем примере переменные заполнены исходя из моей конфигурации компьютера: один диск с Windows, разбитый на два раздела (загрузочный "System Reserved" и основной NTFS), а внутри VHD — один раздел ext4.
+
+Настройка загрузчика bootmgr
+
+Обратите внимание: в зависимости от версии Windows и особенностей установки ОС возможны незначительные отличия.
+
+Первое, что надо сделать, — подключить скрытый раздел с bootmgr, в примере ниже я подключаю скрытый раздел "System Reserved" в каталог C:\mnt (каталог должен быть предварительно создан). Команды выполняются в diskpart.exe:
+
+list volume
+  Volume 1         System Rese  NTFS   Partition    549 MB  Healthy    System
+  Volume 2     C                NTFS   Partition     49 GB  Healthy    Boot
+select volume 1
+assign mount=C:\mnt
+
+После этого надо распаковать в каталог C:\mnt\ файлы из архива с grub4dos: grldr и grldr.mbr. В этот же каталог надо скопировать файл menu.lst, созданный на предыдущем шаге. После этого раздел можно отключить в diskpart.exe:
+
+remove mount=C:\mnt
+
+Чтобы настроить отображение пункта меню при загрузке Windows, надо сделать следующее:
+
+bcdedit.exe -create -d grub4dos -application bootsector
+*The entry {GUID} was successfully created.
+
+В ответ будет сообщен GUID нового пункта меню. Полученный GUID используется в следующих командах:
+
+bcdedit.exe -set {GUID} device boot
+bcdedit.exe -set {GUID} path \grldr.mbr
+bcdedit.exe -displayorder {GUID} -addlast
+
+Тут подробно не останавливаюсь, все команды очевидны и хорошо описаны в документации. Ну, и чтобы не переключаться лишний раз между графическим и текстовым режимами:
+
+bcdedit.exe /set {default} bootmenupolicy legacy
+
+На этом всё: можно перезагрузить компьютер, выбрать в меню загрузки grub4dos, затем Debian, после чего должен загрузиться Linux.
+
+Что делать, если не грузится?
+В этом случае, скорее всего, неверно указаны параметры с путями к устройству, на котором находится VHD-файл, или раздел на loop-устройстве. Если загрузка останавливается на уровне grub4dos, то в консоли надо последовательно вводить команды, перечисленные в menu.lst, и смотреть на результаты, в зависимости от которых правильно указать параметры для загрузки Linux. Если загрузка останавливается в initramfs, то надо проверить доступность необходимых устройств на этом этапе. Проверить можно, последовательно вводя команды из скрипта loop_boot_vhd (основное: смонтировать нужные разделы, найти VHD, подключить его, проверить присвоенный номер партиции с Linux, в моем примере — loop0p1).
+
+А как же UEFI?
+Это немного другая история, надеюсь, позже найду время и проведу аналогичный эксперимент с UEFI.
+
+UPD. Продолжение про UEFI: https://habr.com/ru/company/domclick/blog/552170/
+
+Блог компании Домклик*nix: https://habr.com/ru/hub/nix/
+Сайт: https://domclick.ru/

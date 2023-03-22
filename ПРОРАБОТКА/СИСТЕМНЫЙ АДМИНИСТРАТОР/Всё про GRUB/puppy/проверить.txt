@@ -1,0 +1,154 @@
+https://wikka.puppylinux.com/grub2tut
+
+How to Set up Grub2 for puppy
+
+For distros which uses grub2
+
+Firstly, please take note that this How-to is only applicable if you are running other distros with uses grub2 (eg mint/ubuntu).
+
+Note1: You do all this from the distro which uses grub2.
+Note2: Paths in Grub2 is case sensitive.
+
+
+1. Make a folder and place it at the root directory of a drive/partition.
+
+(In this how-to, we are going to assume that the name of the folder is 'puppy')
+
+
+
+2. Mount the ISO and copy the files into the folder.
+
+2b. If you have burn a CD, you can copy the contents of the CD out into the folder.
+
+
+
+3. If you have made the folder a drive/partition with an existing grub2 entry.
+Go to /boot/grub/grub.cfg then copy the top part of the menuentry. For example,
+menuentry "Vista" {
+insmod part_msdos
+insmod ntfs
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set dcdc98a0dc98768c
+
+
+
+4. Edit the file "/etc/grub.d/40_custom" as root.
+You can do this with the command "sudo [name-of-text-editor] /etc/grub.d/40_custom" without the quotes.
+Insert something like:
+
+menuentry "Puppy linux" {
+set root='(hd0,#)'
+linux /puppy/vmlinuz
+initrd /puppy/initrd.gz
+}
+
+--
+
+menuentry "Puppy linux(pfix=ram)" { < You can change the name to whatever you want
+set root='(hd0,#)' < The # is which sda/hda# it is in. Eg. sda3 will be '(hd0,3)' Also, note that the single quotes are VERY important
+linux /puppy/vmlinuz pfix=ram < Assuming your folder name is "puppy". also, you can insert boot param as shown
+initrd /puppy/initrd.gz
+}
+
+--
+If you have done step 3, you can use it like that
+
+menuentry "Puppy" {
+insmod part_msdos
+insmod ntfs
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set dcdc98a0dc98768c
+linux /puppy/vmlinuz
+initrd /puppy/initrd.gz
+}
+
+--
+
+
+5. After you have edited that file as root and save it, run "sudo update-grub"
+
+6. Check if your entry appeared in /boot/grub/grub.cfg
+
+7. Boot into puppy.
+
+If you do not use other distro which uses grub2, you can edi the grub.cfg directly.
+However, it would be a good idea to use other bootloaders like grub4dos which is more user friendly for puppy.
+
+
+
+
+перевод
+
+Как настроить Grub2 для щенка
+
+Для дистрибутивов, использующих grub2
+
+Во-первых, обратите внимание, что это руководство применимо только в том случае, если вы используете другие дистрибутивы с использованием grub2 (например, mint/ubuntu).
+
+Примечание 1: вы делаете все это из дистрибутива, который использует grub2.
+Примечание 2: Пути в Grub2 чувствительны к регистру.
+
+
+1. Создайте папку и поместите ее в корневой каталог диска/раздела.
+
+(В этом руководстве мы предполагаем, что папка называется «щенок»).
+
+
+
+2. Смонтируйте ISO и скопируйте файлы в папку.
+
+2б. Если вы записали компакт-диск, вы можете скопировать содержимое компакт-диска в папку.
+
+
+
+3. Если вы сделали папку диском/разделом с существующей записью grub2.
+Перейдите в /boot/grub/grub.cfg, затем скопируйте верхнюю часть пункта меню. Например,
+пункт меню "Виста" {
+insmod part_msdos
+инмод нтфс
+установить root='(hd0,msdos1)'
+поиск --no-floppy --fs-uuid --set dcdc98a0dc98768c
+
+
+
+4. Отредактируйте файл «/etc/grub.d/40_custom» как root.
+Вы можете сделать это с помощью команды «sudo [имя-текстового-редактора] /etc/grub.d/40_custom» без кавычек.
+Вставьте что-то вроде:
+
+пункт меню "Щенок Linux" {
+установить root='(hd0,#)'
+линукс /щенок/vmlinuz
+initrd /щенок/initrd.gz
+}
+
+--
+
+menuentry "Puppy linux(pfix=ram)" { < Вы можете изменить имя на любое другое
+set root='(hd0,#)' < # означает, в каком sda/hda# он находится. Например. sda3 будет '(hd0,3)' Также обратите внимание, что одинарные кавычки ОЧЕНЬ важны
+linux /puppy/vmlinuz pfix=ram < Предполагая, что имя вашей папки «щенок». также вы можете вставить параметр загрузки, как показано
+initrd /щенок/initrd.gz
+}
+
+--
+Если вы сделали шаг 3, вы можете использовать его так
+
+пункт меню "Щенок" {
+insmod part_msdos
+инмод нтфс
+установить root='(hd0,msdos1)'
+поиск --no-floppy --fs-uuid --set dcdc98a0dc98768c
+линукс /щенок/vmlinuz
+initrd /щенок/initrd.gz
+}
+
+--
+
+
+5. После того, как вы отредактировали этот файл как root и сохранили его, запустите «sudo update-grub».
+
+6. Проверьте, появилась ли ваша запись в /boot/grub/grub.cfg.
+
+7. Загрузите щенка.
+
+Если вы не используете другой дистрибутив, использующий grub2, вы можете напрямую отредактировать grub.cfg.
+Тем не менее, было бы неплохо использовать другие загрузчики, такие как grub4dos, которые более удобны для пользователя.
