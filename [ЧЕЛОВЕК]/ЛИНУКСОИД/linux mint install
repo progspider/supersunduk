@@ -46,8 +46,11 @@
                sudo apt-get install kivy-examples
          Сайт: https://kivy.org/doc/stable/installation/installation-linux.html#linux-ppa
 
-[14]    Пакет: 
-      Команда: 
+[14]    Пакет: Grub Customizer
+      Команда: sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+	           sudo apt-get update
+			   sudo apt-get install grub-customizer
+         LINK: https://losst.pro/ustanovka-grub-customizer-v-linux-mint
 
 [15]    Пакет: 
       Команда: 
