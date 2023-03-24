@@ -1,3 +1,5 @@
 https://habr.com/ru/post/253260/ Установка загрузчика grub4dos на флешку из linux-консоли
 
 http://greenflash.su/publ/14-1-0-3 Установка Grub4DOS
+
+https://habr.com/ru/post/228641/  Grub 2 + VHD: установка и загрузка ОС Windows 7 Ultimate  (какой то сложный метод)
