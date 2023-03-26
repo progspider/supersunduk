@@ -1,0 +1,7 @@
+"Ctrl" + "+", "Ctrl" + "-", Увеличить, уменьшить размер шрифта (Windows)
+
+Настройка цветовой темы:
+File >> Preferences >> Color Theme >> + Browse Additional Color Themes... >> Bluloco Dark Theme
+
+Настройка иконок:
+File >> Preferences >> File Icon Theme >> Install Additional File Icon Themes... >> Material Icon Theme >> После инсталяции её нужно выбрать (вверху строчка с названием)
