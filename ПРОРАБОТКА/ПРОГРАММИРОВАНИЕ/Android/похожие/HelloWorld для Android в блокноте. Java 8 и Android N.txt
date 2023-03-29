@@ -1,0 +1,384 @@
+https://habr.com/ru/post/309504/
+
+Пишем, собираем и запускаем HelloWorld для Android в блокноте. Java 8 и Android N
+
+https://habrastorage.org/r/w1560/files/a0b/9ab/7d7/a0b9ab7d773e46a2acef4fbed3d6a63a.png
+
+Два с половиной года назад я опубликовал статью Пишем, собираем и запускаем HelloWorld для Android в блокноте (https://habrahabr.ru/post/210584/). Она стала пользоваться огромной популярностью и набрала около 80 000 просмотров. С появлением новых инструментов, таких как Jack ToolChain, возникла необходимость переиздания и обновления статьи.
+
+Когда я начал изучать Android, захотелось полностью написать и скомпилировать Android-приложение вручную — без использования IDE. Однако эта задача оказалась непростой и заняла у меня довольно много времени. Но как оказалось — такой подход принёс большую пользу и прояснил многие тонкости, которые скрывают IDE.
+
+Используя только блокнот, мы напишем совсем маленькое учебное Android-приложение. А затем скомпилируем его, соберём и запустим на устройстве — и всё через командную строку. Заинтересовало? Тогда прошу.
+
+Вступление
+
+Я был поражён, насколько сложным и запутанным является шаблонное приложение в Android Studio. Оно просто нагромождено ресурсами. И в меньшей степени — кодом и скриптами. Хотя всё что оно должно делать — это выводить на экран HelloWorld! Кроме того, в книгах и руководствах, которые я просмотрел, объясняется, как с помощью диалоговых окон создать IDEA-шный или эклипсовый HelloWorld — и от него уже идёт дальнейшее повествование. А что происходит «под капотом» — остаётся только гадать.
+
+Мы создадим свой шаблонный проект, который идеально использовать для учебных целей. Там не будет ничего лишнего, только всё самое необходимое. А потом детально разберём, как его собрать и запустить на вашем Android-устройстве. В конце статьи будет ссылка на скачивание архива с итоговым проектом — если возникнут какие-то вопросы — можете свериться с ним.
+
+Таким образом, вы будете на 100% знать и понимать состав вашего проекта и процесс его сборки. Хотя этот тестовый проект предназначен для обучения, при небольшой доработке его можно будет использовать как прочный фундамент для ваших реальных проектов.
+
+Подготовка
+
+Для начала нам нужно скачать и установить инструменты командной строки (command line tools). Ссылка на их скачивание находится внизу страницы, посвящённой Android Studio (https://developer.android.com/studio/index.html).
+
+Android SDK 24 это как раз Android N (Nougat / 7). Принимаем условия, скачиваем установщик, запускаем его. Оставим всё по умолчанию. Он установится в директорию вида C:\Users\kciray\AppData\Local\Android\android-sdk. Запомните этот путь, там будут находится наши основные инструменты.
+
+Далее, запускаете SDK Manager (из папки android-sdk) и тоже устанавливаете набор по-умолчанию. Там есть всё необходимое, включая новый Jack-компилятор. Также вам понадобится JDK 8 (http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+
+Главное требование перед прочтением этой статьи — кроме установленного софта вы должны уже уметь запускать на вашем девайсе тот Helloworld, который поставляется вместе с Eclipse или Android Studio. Т.е. у вас должен быть настроен драйвер usb, включена отладка по usb на вашем девайсе и т.д… Или же создан и настроен эмулятор. Это совсем элементарные вещи, и их рассмотрение выходит за рамки данной статьи — в сети достаточно информации. Кстати прочитать пару глав из книг тоже будет не лишним — хотя бы понимать, как устроен манифест, ресурсы, да и вообще основы языка Java. А в этой статье я опишу то, о чём книги молчат.
+
+Написание проекта
+
+Для начала, создайте некоторую папку, где будет ваш проект. Назовём её testapp. В ней создайте ещё 3 папки — bin, res и src.
+
+Создайте в testapp пустой текстовый файл и измените его имя на AndroidManifest.xml.
+
+Добавьте в него следующее:
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.testapp">
+    <uses-sdk android:targetSdkVersion="24" />
+
+    <application android:label="TestApp">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+
+Тут всё просто. Мы намерены сделать приложение с именем TestApp, которое при старте запускает класс MainActivity. Осталось только написать этот небольшой класс — и приложение готово. Если нужно — отредактируйте в теге uses-sdk свойство android:targetSdkVersion — поставьте ту версию, которая у вас.
+
+Далее — создадим простейший ресурс — строку Hello test app. Вообще-то мы могли обойтись и без ресурса, вставив эту строку прямо в Java код. Но некоторые шаги сборки работают с ресурсами, и чтобы увидеть интересные моменты — мы всё-таки поработаем с ними.
+
+Давайте создадим в папке res папку values. Все ресурсы следует разбивать по папкам. Далее — в ней создадим пустой файл strings.xml, а в нём напишем:
+
+<resources>
+    <string name="hello">Hello test app!</string>
+</resources>
+
+Вот и все ресурсы, нам необходимые. Просто, не так ли? Далее создадим внутри src папку com, в ней папку example, потом ещё ниже по иерархии папку testapp — а там уже наш класс MainActivity.java. Добавим туда код:
+
+package com.example.testapp;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Button button = new Button(this);
+        button.setText("Big button");
+
+        button.setOnClickListener(v -> {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("From lambda")
+                    .setMessage(getString(R.string.hello))
+                    .show();
+        });
+        
+        setContentView(button);
+    }
+}
+
+Это простейшая Activity, которая содержит одну кнопку на весь экран. При нажатии на эту кнопку вызывается диалоговое окно, которое показывает строку из ресурсов. Обратите внимание на лямбду (конструкция v -> {...}). Jack ToolChain позволяет нам использовать многие возможности Java 8 под андроидом. Более подробно можете почитать на developer.android.com (https://developer.android.com/guide/platform/j8-jack.html?hl=ru) и source.android.com (http://source.android.com/source/jack.html).
+
+Структура каталогов должна получится такая:
+
+│   AndroidManifest.xml
+├───bin
+├───res
+│   └───values
+│           strings.xml
+│
+└───src
+    └───com
+        └───example
+            └───testapp
+                    MainActivity.java
+
+И это собственно всё, что нам было нужно для простейшего проекта. Для сравнения —
+
+HelloWorld от Android Studio (2.1.3):
+
+│   .gitignore
+│   build.gradle
+│   gradle.properties
+│   gradlew
+│   gradlew.bat
+│   local.properties
+│   MyApplication2.iml
+│   settings.gradle
+│
+├───.gradle
+│   └───2.14.1
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               fileSnapshotsToTreeSnapshotsIndex.bin
+│               taskArtifacts.bin
+│
+├───.idea
+│   │   .name
+│   │   compiler.xml
+│   │   encodings.xml
+│   │   gradle.xml
+│   │   misc.xml
+│   │   modules.xml
+│   │   runConfigurations.xml
+│   │   workspace.xml
+│   │
+│   ├───copyright
+│   │       profiles_settings.xml
+│   │
+│   └───libraries
+│           animated_vector_drawable_24_2_0.xml
+│           appcompat_v7_24_2_0.xml
+│           hamcrest_core_1_3.xml
+│           junit_4_12.xml
+│           support_annotations_24_2_0.xml
+│           support_compat_24_2_0.xml
+│           support_core_ui_24_2_0.xml
+│           support_core_utils_24_2_0.xml
+│           support_fragment_24_2_0.xml
+│           support_media_compat_24_2_0.xml
+│           support_v4_24_2_0.xml
+│           support_vector_drawable_24_2_0.xml
+│
+├───app
+│   │   .gitignore
+│   │   app.iml
+│   │   build.gradle
+│   │   proguard-rules.pro
+│   │
+│   ├───libs
+│   └───src
+│       ├───androidTest
+│       │   └───java
+│       │       └───com
+│       │           └───example
+│       │               └───kciray
+│       │                   └───myapplication
+│       │                           ApplicationTest.java
+│       │
+│       ├───main
+│       │   │   AndroidManifest.xml
+│       │   │
+│       │   ├───java
+│       │   │   └───com
+│       │   │       └───example
+│       │   │           └───kciray
+│       │   │               └───myapplication
+│       │   │                       MainActivity.java
+│       │   │
+│       │   └───res
+│       │       ├───drawable
+│       │       ├───layout
+│       │       │       activity_main.xml
+│       │       │
+│       │       ├───mipmap-hdpi
+│       │       │       ic_launcher.png
+│       │       │
+│       │       ├───mipmap-mdpi
+│       │       │       ic_launcher.png
+│       │       │
+│       │       ├───mipmap-xhdpi
+│       │       │       ic_launcher.png
+│       │       │
+│       │       ├───mipmap-xxhdpi
+│       │       │       ic_launcher.png
+│       │       │
+│       │       ├───mipmap-xxxhdpi
+│       │       │       ic_launcher.png
+│       │       │
+│       │       ├───values
+│       │       │       colors.xml
+│       │       │       dimens.xml
+│       │       │       strings.xml
+│       │       │       styles.xml
+│       │       │
+│       │       └───values-w820dp
+│       │               dimens.xml
+│       │
+│       └───test
+│           └───java
+│               └───com
+│                   └───example
+│                       └───kciray
+│                           └───myapplication
+│                                   ExampleUnitTest.java
+│
+├───build
+│   └───generated
+│           mockable-android-24.jar
+│
+└───gradle
+    └───wrapper
+            gradle-wrapper.jar
+            gradle-wrapper.properties
+
+Выглядит страшнее, чем 2 года назад
+
+Собственно, автоматизация через gradle, работа с git и IDE — вещи очень важные, однако на этапе изучения Android мне бы очень хотелось от них абстрагироваться.
+
+Сборка
+
+Теперь же подходим к самому важному и сложному этапу. Мы будем много работать с командной строкой, поэтому рекомендую вам все команды, данные здесь, записывать в один файл и назвать его Compile.bat. В конце файла после команд можете добавить pause, чтобы был виден результат и ошибки — если таковые возникнут.
+
+Подготовка путей
+
+Первое, что мы сделаем для удобства и краткости — создадим специальные переменные, в которых будем хранить пути. Для начала — определим наши основные директории. Вам нужно заменить пути к JDK и Android SDK на те, которые у вас.
+
+set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_73
+set ANDROID_HOME=C:\Users\kciray\AppData\Local\Android\android-sdk
+set DEV_HOME=%CD%
+
+Далее — пути непосредственно к программам. Я рекомендую вам просмотреть каталоги ваших SDK и убедится в том, что всё на месте. Также подкорректировать версии, которые присутствуют в путях.
+
+set JACK_JAR="%ANDROID_HOME%\build-tools\24.0.2\jack.jar"
+set AAPT_PATH="%ANDROID_HOME%\build-tools\24.0.2\aapt.exe"
+set ANDROID_JAR="%ANDROID_HOME%\platforms\android-24\android.jar"
+set ADB="%ANDROID_HOME%\platform-tools\adb.exe"
+set JAVAVM="%JAVA_HOME%\bin\java.exe"
+
+Между прочим, в более старых версиях утилита aapt находилась в platform-tools — и я не исключаю что она и\или другие могут слинять куда-нибудь ещё. Так что будьте внимательны. Если вы всё правильно сверите сейчас — то остальная часть статьи должна пройти гладко.
+
+И ещё — в пару переменных забьём наши пакеты и классы. Если заходите их сменить — вам не придётся бегать по коду — все настройки вначале.
+
+set PACKAGE_PATH=com/example/testapp
+set PACKAGE=com.example.testapp
+set MAIN_CLASS=MainActivity
+
+Подготовка к компиляции
+
+Для начала спрошу — а вы никогда не задумывались, как работает загадочный класс R? Собственно меня он сперва смутил из-за его сверхъестественных возможностей. Как на этапе компиляции можно через поля класса обращаться к XML-файлам в других каталогах? Я предположил, что тут орудует прекомпилятор — так оно и оказалось.
+
+Собственно, есть специальная утилита AAPT — она проходится по каталогам ваших ресурсов и создаёт тот самый R.java. Оказывается, всё очень даже просто — это просто класс, в составе которого другие статические вложенные классы с целочисленными константами. И всё! Он выглядит примерно так:
+
+R.java:
+
+/* AUTO-GENERATED FILE.  DO NOT MODIFY.
+ *
+ * This class was automatically generated by the
+ * aapt tool from the resource data it found.  It
+ * should not be modified by hand.
+ */
+
+package com.example.testapp;
+
+public final class R {
+    public static final class attr {
+    }
+    public static final class string {
+        public static final int hello=0x7f020000;
+    }
+}
+
+Теперь давайте создадим его у вас. Для этого используем следующие команды:
+
+call %AAPT_PATH% package -f -m -S %DEV_HOME%\res -J %DEV_HOME%\src -M %DEV_HOME%\AndroidManifest.xml -I %ANDROID_JAR%
+
+Давайте разберёмся, что к чему. AAPT — Android Asset Packaging Tool — буквально «упаковщик андроид-имущества». Его опции:
+
+ ● package — говорит, что нам нужно именно упаковать ресурсы (а не добавить или удалить)
+ ● -f — перезапись существующего R.java, если таковой имеется
+ ● -m — разместить R.java в надлежащих пакетах, а не в корне указанного в -J пути
+ ● -S — после этой опции мы указываем каталог с ресурсами
+ ● -J — после этой опции мы указываем куда сохранить получившийся R.java
+ ● -I — после этой опции мы указываем путь к подключаемой библиотеке — включаем android.jar
+
+После его выполнения в каталоге src должен появится тот самый файл R.java. Проверьте.
+
+Теперь в нашем проекте нет никакой магии и он полностью синтаксически корректен в рамках Java. А теперь самое интересное. Помните, как классические Java-программы компилируются через javac? Раньше он также входил в последовательность сборки Android-приложений. Мы брали наши исходники (*.java), получали из них байт-код JVM (*.class) и уже потом из него получали байт-код для Dalvic (*.dex). С появлением Jack ToolChain мы сократили нашу последовательность сборки на один шаг. Из исходников (*.java) мы сразу же получаем байт-код для Dalvic (*.dex).
+
+Где же взять Джека? Он находится в папке build-tools в виде jack.jar и запускается как обычный Java-архив.
+
+%JAVAVM% -jar %JACK_JAR% --output-dex "%DEV_HOME%\bin" -cp %ANDROID_JAR% -D jack.java.source.version=1.8 "%DEV_HOME%\src\com\example\testapp\R.java" "%DEV_HOME%\src\com\example\testapp\MainActivity.java"
+
+Аргументы следующие:
+
+ ● -jar — Стандартная опция для JVM, указывающая на то, что нужно запустить Java-архив. Не имеет никакого отношения к Джеку
+ ● --output-dex — Папка, в которую нужно поместить итоговый dex-файл. Пускай он будет в bin
+ ● -D jack.java.source.version=1.8 — «D» указывает на то, что мы задаём свойство. jack.java.source.version позволяет нам указать, что мы используем Java 8. Без неё лямбды не будут работать и будут ошибки. Полный список свойств можете посмотреть по команде %JAVAVM% -jar %JACK_JAR% --help-properties
+ ● [Список из *.java — файлов] — Ваши исходники. У нас всего 2 файла — R.java и MainActivity.java
+
+Полный список опций для Джека можете посмотреть по команде %JAVAVM% -jar %JACK_JAR% --help
+
+Убедитесь в том, что в папке bin находится наш classes.dex. Теперь осталось только упаковать его вместе с ресурсами в APK-файл. Сделаем это:
+
+call %AAPT_PATH% package -f -M %DEV_HOME%/AndroidManifest.xml -S %DEV_HOME%/res -I %ANDROID_JAR% -F %DEV_HOME%/bin/AndroidTest.unsigned.apk %DEV_HOME%/bin
+
+Здесь опции аналогичны тем, которые мы использовали при создании R.java:
+
+ ● package — говорит, что нам нужно именно упаковать ресурсы (а не добавить или удалить)
+ ● -f — перезапись существующего AndroidTest.unsigned.apk, если таковой имеется
+ ● -M — после этой опции мы указываем путь к файлу манифеста
+ ● -S — после этой опции мы указываем каталог с ресурсами
+ ● -I — после этой опции мы указываем путь к подключаемой библиотеке — включаем android.jar
+ ● -F — после этой опции мы указываем куда сохранить получившийся AndroidTest.unsigned.apk
+ ● последний аргумент — путь к папке с dex — файлами
+
+В папке bin теперь должен появится AndroidTest.unsigned.apk. И мы назвали его не просто так! У него нет цифровой подписи. Андроид запрещает устанавливать и запускать приложения без подписи. Но создать её не так-то трудно, как может показаться на первый взгляд.
+
+call %JAVA_HOME%/bin/keytool -genkey -validity 10000 -dname "CN=AndroidDebug, O=Android, C=US" -keystore %DEV_HOME%/AndroidTest.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -v -keysize 2048
+call %JAVA_HOME%/bin/jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore %DEV_HOME%/AndroidTest.keystore -storepass android -keypass android -signedjar %DEV_HOME%/bin/AndroidTest.signed.apk %DEV_HOME%/bin/AndroidTest.unsigned.apk androiddebugkey
+
+Собственно, эти строчки запускают 2 Java-утилиты, которые не имеют никакого отношения к Android SDK — но они необходимы. Первая создаёт файл AndroidTest.keystore (проверьте его наличие), а вторая — этот файл соединяет с AndroidTest.unsigned.apk. Получается файл AndroidTest.signed.apk. Вот такой дикий крафт файлов. Но однажды создав bat-скрипт запускайте его — и он будет делать всё это в автоматическом режиме.
+
+Я думаю, не стоит тратить время на детальный разбор опций этих утилит в пределах данной статьи. Просто нужно уловить суть — они берут AndroidTest.unsigned.apk, подписывают его файлом AndroidTest.keystore и сохраняют в AndroidTest.signed.apk. Если есть желание, можете почитать в документации (http://developer.android.com/tools/publishing/app-signing.html).
+
+У вас, скорее всего, будет предупреждение "Warning: No -tsa or -tsacert is provided and this jar...", но не обращайте внимание.
+
+Запуск
+
+Теперь, когда мы наконец собрали наш apk-файл — можем его запустить. Подключите по usb ваше устройство, или же запустите эмулятор. А затем выполните:
+
+call %ADB% uninstall %PACKAGE%
+call %ADB% install %DEV_HOME%/bin/AndroidTest.signed.apk
+call %ADB% shell am start %PACKAGE%/%PACKAGE%.%MAIN_CLASS%
+
+Собственно, первая строчка удаляет программку, если она уже там есть. Для повторных запусков пригодится. Вторая — устанавливает APK на ваш девайс или эмулятор. Третья же — запускает. Давайте более подробно разберём её аргументы:
+
+ ● shell — мы хотим выполнить некоторые команды на нашем девайсе
+ ● am — используем для выполнения команд activity manager
+ ● start — мы хотим запустить некоторое Activity
+ ● имя пакета и полное имя класса (включая пакет), которые мы стартуем
+
+Внимание — во время установки на устройстве может появится диалоговое окно с подтверждением. Если вовремя его не одобрить, то установка произойдёт с ошибкой [INSTALL_FAILED_USER_RESTRICTED]. Также у вас может возникнуть вопрос — зачем делать uninstall/install вместо install -r. Я сделал так для чистоты эксперимента. Скрипт полностью удаляет все продукты своей деятельности и создаёт их с нуля при каждом запуске. Даже ключи. Вы можете использовать install -r, но тогда следует убрать код, который отвечает за пересоздание ключей. Иначе вы столкнётесь с ошибкой [INSTALL_FAILED_UPDATE_INCOMPATIBLE].
+
+Заключение
+
+После сборки всех файлов дерево каталогов должно быть примерно таким:
+
+│   AndroidManifest.xml
+│   AndroidTest.keystore
+│   Clear.bat
+│   Compile.bat
+│
+├───bin
+│       AndroidTest.signed.apk
+│       AndroidTest.unsigned.apk
+│       classes.dex
+│
+├───res
+│   └───values
+│           strings.xml
+│
+└───src
+    └───com
+        └───example
+            └───testapp
+                    MainActivity.java
+                    R.java
+
+Теперь вы можете наглядно увидеть и понять, как происходит сборка андроид-приложения на более низком уровне. Когда будете использовать IDE — если сборка вдруг пойдёт не так (а такое часто бывает) — сможете вырулить ситуацию как надо. Также обратите внимание на то, что итоговый apk-файл занимает всего около 4 килобайт.
