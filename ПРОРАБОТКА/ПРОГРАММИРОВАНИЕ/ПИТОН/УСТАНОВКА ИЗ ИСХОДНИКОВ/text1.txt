@@ -1,0 +1,6 @@
+1. Скачайте архив с kivy
+   https://pypi.org/project/Kivy/#files
+2. Распакуйте его
+3. Запустите cmd.exe и перейдите в папку с распакованным архивом.
+4. Запустите команду "python setup.py install" или "python3 setup.py install"
+5. В папке появится установленный пакет, его нужно перенести в папку python с остальными пакетами. Например: "C:\Users\USER_NAME\AppData\Local\Programs\Python38\Lib"

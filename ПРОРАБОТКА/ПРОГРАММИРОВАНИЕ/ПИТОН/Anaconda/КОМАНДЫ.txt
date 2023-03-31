@@ -1,0 +1,1 @@
+conda install kivy - эту команду проверить
