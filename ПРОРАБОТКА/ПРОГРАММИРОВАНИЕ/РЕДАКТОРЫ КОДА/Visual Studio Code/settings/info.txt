@@ -1,0 +1,13 @@
+File >> Preferences >> Settings, затем вверху (строка вкладок) справа есть кнопка (иконка: документ со стрелкой), на неё нажать, откроется файл настроек в виде json файла, редактируя и сохраняя этот файл, меняются настройки программы.
+Путь: "C:\Users\RUSLAN\AppData\Roaming\Code\User\settings.json"
+Link: https://github.com/bstashchuk/vs-code-settings/blob/main/settings.json
+
+ОПИСАНИЕ
+"workbench.colorTheme": "Bluloco Dark" - название той темы, которую мы используем.
+"window.zoomLevel": 1 - указывает на текущее увеличение размера шрифта.
+"workbench.layoutControl.enabled": false - если просто удалить всю эту строку, то снова появляется верхняя панель (та что на маке занимает много места).
+"editor.fontSize": 20 - размер шрифта непосредственно в редакторе.
+"editor.letterSpacing": 0.5 - размер между символами.
+"terminal.integrated.fontSize": 18 - размер шрифта во встроенном терминале.
+"editor.hover.delay": 1500 - задержка отображения всплывающей подсказки.
+"editor.glyphMargin": false - убираем большой отступ перед номерами строк.

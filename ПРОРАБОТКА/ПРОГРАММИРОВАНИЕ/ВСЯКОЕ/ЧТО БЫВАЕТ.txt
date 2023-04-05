@@ -1,0 +1,39 @@
+Languages:
+    Go
+    Node.js
+    Perl
+    PHP
+    Python 2
+    Python 3
+    Ruby
+    Tcl
+
+Package Managers:
+    Bower
+	Composer
+	CPAN
+	CPANM
+	Gem
+	NPM
+	pip 2
+	pip 3
+	Yarn
+
+Tools:
+    Cordova
+	Docker
+	Drush
+	Gocode
+	Godef
+	Grunt
+	Gulp
+	PhoneGap
+	Vagrant
+
+Version Control:
+    Bazaar
+	CVS
+	Git
+	Mercurial
+	Perforce
+	Subversion
