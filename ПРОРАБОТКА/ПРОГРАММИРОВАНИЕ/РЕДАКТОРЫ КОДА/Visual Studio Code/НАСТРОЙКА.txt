@@ -5,3 +5,35 @@ File >> Preferences >> Color Theme >> + Browse Additional Color Themes... >> Blu
 
 Настройка иконок:
 File >> Preferences >> File Icon Theme >> Install Additional File Icon Themes... >> Material Icon Theme >> После инсталяции её нужно выбрать (вверху строчка с названием)
+
+
+Если на MacOS не работает расширение "Code Runner" то: идём в File >> Preferences >> Settings, в поисковое поле пишем: code runner, ниже в секции: "Code-runner: Executor Map" нажимаем на "Edit in settings.json", откроется файл в котором указано как выполняется тот или иной тип файла, ищем "python": "python -u" меняем на "python": "python3 -u", должно заработать.
+
+Пример выполнения кода:
+------------------------------------------------------
+[Running] python -u "d:\UDALIT\python\Untitled-1.py"
+Hello Ruslan!!!
+
+[Done] exited with code=0 in 1.745 seconds
+------------------------------------------------------
+
+code=0 означает что программа успешно завершила свою работу.
+
+
+УДОБНЫЕ НАСТРОЙКИ
+
+ОЧИСТИТЬ ПРЕДЫДУЩИЙ ВЫВОД
+(идём в File >> Preferences >> Settings, в поисковое поле пишем: code runner)
+В секции: Code-runner: Clear Previous Output, ставим галочку перед: Whether to clear previous output before each run.
+
+СКРЫТЬ СООБЩЕНИЯ КОТОРЫЕ ВЫВОДЯТСЯ ПЕРЕД КОДОМ И ПОСЛЕ
+(идём в File >> Preferences >> Settings, в поисковое поле пишем: code runner)
+В секции: Code-runner: Show Execution Message, убрать галочку перед: Whether to Show extra execution message like [Running] ... and [Done] ...
+
+АВТОМАТИЧЕСКИЙ СОХРАНЯТЬ ФАЙЛ ПЕРЕД ЗАПУСКОМ
+(идём в File >> Preferences >> Settings, в поисковое поле пишем: code runner save)
+В секции: Code-runner: Save File Before Run, ставим галочку перед: Whether to save the current file before running.
+
+ПАНЕЛЬ ВЫВОДА СМЕСТИТЬ НАПРАВО
+На панели, в строке вкладок, нажать правой кнопкой мыши и выбрать: Move Panel Right
+(Ctrl + J, скрыть или показать панель)
