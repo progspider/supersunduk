@@ -1,0 +1,7 @@
+              GITHub LINK: https://github.com/bootchk/resynthesizer
+Link (plugin for Windows): https://github.com/pixlsus/registry.gimp.org_static/blob/master/registry.gimp.org/files/Resynthesizer_v1.0-i686.zip (42.2 KB)
+
+Установка на Windows
+
+Правка >> Параметры >> Каталоги (дерево раскрыть) >> Плагины >> Увидим ПУТИ, в которые (Я ПЕРВЫЙ ПУТЬ ТОЛЬКО ВЫБИРАЛ) нужно распаковать содержимое архива. GIMP перезапустить.
+У меня так было: C:\Users\RUSLAN\AppData\Roaming\GIMP\2.10\plug-ins
