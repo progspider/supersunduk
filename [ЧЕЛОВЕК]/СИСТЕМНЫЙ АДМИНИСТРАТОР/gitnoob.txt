@@ -10,6 +10,8 @@ https://habr.com/ru/company/playrix/blog/350492/ Git: советы новичк�
   git config --global user.name "progspider"
 
 
+Получение списка всех настроек Git: git config --list
+
 ---------------------------------------------------------------------------------------------
 https://unetway.com/blog/sozdanie-tokena-personalnogo-dostupa-dla-komandnoj-stroki
 

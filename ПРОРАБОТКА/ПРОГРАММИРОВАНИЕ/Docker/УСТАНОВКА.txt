@@ -1,0 +1,57 @@
+Установка в Windows: скачивается и устанавливается Docker Desktop Installer.exe (621 Мб)
+
+
+
+Как установить Docker на Linux Mint 20 (https://infoit.com.ua/linux/kak-ustanovit-docker-na-linux-mint-20/)
+
+Установить Docker на Linux Mint 20 Ulyana
+
+Шаг 1:
+
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+Шаг 2. Установка Docker на Linux Mint 20.
+
+Установите Docker с помощью Snap:
+
+Выполните следующую команду, чтобы установить пакеты Snap:
+
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update
+sudo apt install snapd
+
+Чтобы установить Docker, просто используйте следующую команду: sudo snap install docker
+
+Установите Docker из официального источника:
+
+Теперь мы добавляем официальный ключ Docker в вашу систему Linux Mint:
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+Шаг 3. Затем добавьте репозиторий Docker в Linux Mint:
+
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable"
+
+Шаг 4. Затем установите Docker CE с помощью следующей команды:
+
+sudo apt update
+sudo apt install docker-ce
+
+После установки будет создана группа докеров. Добавьте своего пользователя в группу, которая будет запускать команды докеров:
+
+sudo usermod -aG docker $USER
+
+После этого проверьте установку Docker, используя следующую команду: sudo docker --version
+
+Docker используется с синтаксисом, как показано ниже: docker help
+
+Официальный сайт Docker: https://www.docker.com/
+
+========================================================================================
+С помощью скрипта:
+   curl -fsSL https://get.docker.com -o get-docker.sh
+   sudo sh get-docker.sh
+
+Link1: https://docs.docker.com/desktop/install/ubuntu/
+Link2: https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository
