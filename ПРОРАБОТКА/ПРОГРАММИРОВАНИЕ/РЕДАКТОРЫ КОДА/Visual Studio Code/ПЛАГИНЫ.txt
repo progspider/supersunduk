@@ -1,3 +1,7 @@
 Code Runner
 Link: https://gitter.im/formulahendry/vscode-code-runner
 Extension ID: formulahendry.code-runner
+
+
+Formatter autopep8, УСТАНОВКА: нажать ctrl + shift + P, в поле поиска набрать: format, выбрать: Format Document With..., выбрать: Python, далее мы увидим сообщение: Formatter autopep8 is not installed. Install?, мы соглашаемся с установкой. ПРИМЕНЕНИЕ: нажать: ctrl + shift + P, выбрать: Format Document With..., выбрать: Python.
+Настроить так чтобы код был отформатирован при сохранении: нажать ctrl + shift + P, выбрать: Format Document With..., выбрать: Configure Default Formatter..., выбрать: Python, нажать ctrl + , (чтобы вызвать настройки), в поисковое поле вводим: format on save, в опции: Editor: Format On Save ставим галочку. В файле settings.json были добавлены строки: "editor.defaultFormatter": "ms-python.python" и "editor.formatOnSave": true
