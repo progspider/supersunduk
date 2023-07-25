@@ -1,0 +1,31 @@
+КОМПЛЕКСНЫЕ ЧИСЛА
+
+complex_a = 3 + 5j
+complex_b = 4 + 7j
+
+sum = complex_a + complex_b
+
+print(sum)
+# (7 + 12j)
+
+print(type(sum))
+# <class 'complex'>
+
+Комплексные числа в Python используются для различных математических вычислений, и при обработке данных.
+
+КОМПЛЕКСНОЕ ЧИСЛО СОСТОИТ ИЗ ДЕЙСТВИТЕЛЬНОЙ И МНИМОЙ ЧАСТЕЙ
+                                          |   |
+                                          ↓   ↓
+                                          3 + 5j
+
+Немного практики:
+
+complex_a = 10 + 7j
+complex_b = 3 + 3j
+
+print(complex_a + complex_b)  # (13+10j)
+print(complex_a - complex_b)  # (7+4j)
+print(complex_a * complex_b)  # (9+51j)
+
+
+Умножение: потом написать

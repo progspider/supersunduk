@@ -1,0 +1,3 @@
+auto-py-to-exe
+установка: pip install auto-py-to-exe
+запуск: в консоли набрать auto-py-to-exe
