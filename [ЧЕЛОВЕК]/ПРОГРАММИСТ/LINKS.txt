@@ -46,3 +46,5 @@ https://habr.com/ru/company/skillbox/blog/443412/ Многословный Java,
 https://xakep.ru/2015/01/08/google-apps-script/ Google Apps Script
 
 https://habr.com/ru/post/255549/  Запоминаем просмотренные видео на youtube
+
+https://habr.com/ru/companies/ruvds/articles/706070/ Раскрываем секреты загрузочных ISO-образов

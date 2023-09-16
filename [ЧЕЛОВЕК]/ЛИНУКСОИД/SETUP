@@ -137,6 +137,15 @@ https://hackware.ru/?p=11750   Что нужно сделать после ус�
 
 
 
+Для установки kruler (Экранная линейка) в Ubuntu / Linux Mint / Debian, введите в Терминал:
+
+    sudo apt update
+    sudo apt install kruler
+
+Site: http://www.kde.org/applications/graphics/kruler/
 
 
+Для установки kolourpaint в Ubuntu / Linux Mint, введите в Терминал:
 
+sudo apt update
+sudo apt install kolourpaint

@@ -1,0 +1,6 @@
+Bazel
+
+20.05.23, 03:57 - RUSLAN: https://bazel.build/
+20.05.23, 04:18 - RUSLAN: https://bazel.build/start/android-app
+
+20.05.23, 04:25 - RUSLAN: https://youtube.com/watch?v=Tdklf3gCPg8 Миграция Android приложений на Bazel

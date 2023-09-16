@@ -36,3 +36,6 @@ https://unetway.com/blog/sozdanie-tokena-personalnogo-dostupa-dla-komandnoj-stro
 
 composer config --global --auth github-oauth.github.com <token>
 ---------------------------------------------------------------------------------------------
+
+https://www.atlassian.com/ru/git/tutorials/saving-changes/gitignore
+https://ru.hexlet.io/courses/intro_to_git/lessons/gitignore/theory_unit

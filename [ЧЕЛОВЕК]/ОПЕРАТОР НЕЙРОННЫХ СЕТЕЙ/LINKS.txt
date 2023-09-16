@@ -1,1 +1,10 @@
 https://github.com/lencx/ChatGPT
+
+Статьи:
+https://dtf.ru/u/886814-vladislav-ahmetshin/1750755-kak-generirovat-shedevry-v-neyroseti-midjourney-poshagovaya-instrukciya
+
+ПРОМПТЫ:
+https://prompthero.com/ PromptHero
+
+Крутые ветки на Гитхабе:
+https://github.com/willwulfken/MidJourney-Styles-and-Keywords-Reference

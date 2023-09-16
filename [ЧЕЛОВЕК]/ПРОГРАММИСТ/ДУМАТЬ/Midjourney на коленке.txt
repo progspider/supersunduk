@@ -1,0 +1,1 @@
+https://habr.com/ru/companies/selectel/articles/724558/ «Midjourney на коленке». Как развернуть нейросеть в облаке за 5 минут, или начало работы с Diffusers
