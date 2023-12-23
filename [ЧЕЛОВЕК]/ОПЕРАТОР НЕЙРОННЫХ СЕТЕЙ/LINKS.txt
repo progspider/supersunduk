@@ -8,3 +8,10 @@ https://prompthero.com/ PromptHero
 
 Крутые ветки на Гитхабе:
 https://github.com/willwulfken/MidJourney-Styles-and-Keywords-Reference
+
+https://habr.com/ru/articles/681928/ Раскрашивание изображений с использованием нейронных сетей
+git clone https://github.com/jantic/DeOldify.git DeOldify
+
+Stable Diffusion cpu only
+https://github.com/darkhemic/stable-diffusion-cpuonly
+https://github.com/rupeshs/fastsdcpu
