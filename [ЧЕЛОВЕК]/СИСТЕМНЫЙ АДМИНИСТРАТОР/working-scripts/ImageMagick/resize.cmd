@@ -1,0 +1,1 @@
+convert input.jpg -resize 1000 -quality 75 output.jpg
