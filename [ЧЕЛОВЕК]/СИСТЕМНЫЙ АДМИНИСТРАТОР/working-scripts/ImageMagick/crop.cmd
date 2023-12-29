@@ -1,0 +1,1 @@
+convert -crop 720x720+0+190 *.jpg output/29.12.2023.jpg
