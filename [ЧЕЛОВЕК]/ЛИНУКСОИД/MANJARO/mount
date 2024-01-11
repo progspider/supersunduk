@@ -1,0 +1,8 @@
+Чувак, учись работать с консолью
+sudo mount /dev/sdXY /path/to/mountpoint
+
+XY — устройство и раздел, которые ты хочешь смонтировать, второй аргумент — куда хочешь смонтировать
+
+
+
+sudo mount /dev/sdb /home/ruslan/mountpoint

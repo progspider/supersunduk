@@ -1,0 +1,12 @@
+Установка программ: sudo pacman -S yaourt
+Обновление системы: (Полное обновление): sudo pacman -Syyuu
+
+
+Установка Google Chrome
+git clone https://aur.archlinux.org/google-chrome.git
+cd google-chrome
+makepkg -s
+
+
+https://pingvinus.ru/program/geeqie
+sudo pacman -S geeqie
